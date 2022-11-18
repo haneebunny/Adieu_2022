@@ -16,10 +16,17 @@
     "@types/react-dom": "18.0.8",
     "eslint": "8.27.0",
     "eslint-config-next": "13.0.2",
+<<<<<<< HEAD
     "next": "^13.0.3",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-reveal": "^1.2.2",
+=======
+    "next": "13.0.2",
+    "react": "18.2.0",
+    "react-awesome-reveal": "^4.1.0",
+    "react-dom": "18.2.0",
+>>>>>>> a94a424d977eff43c17a9b691384bc067316bb8d
     "typescript": "4.8.4"
   }
 }
