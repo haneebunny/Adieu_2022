@@ -11,7 +11,7 @@ export default function ResultUI() {
             <S.ThemeName>대호시장 살인사건</S.ThemeName>
           </S.InfoBox>
         </S.ThemeCard>
-        <S.ThemeComment>우와우와</S.ThemeComment>
+        <S.ThemeComment>Y H S </S.ThemeComment>
       </Fade>
     </S.Wrapper>
   );
