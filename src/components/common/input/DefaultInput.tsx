@@ -7,7 +7,7 @@ interface IInputTypes {
 }
 
 export default function DefaultInput({
-  placeholder = "써주세요.",
+  placeholder = "입력!💨",
   value,
   setValue,
 }: IInputTypes) {
@@ -18,9 +18,16 @@ export default function DefaultInput({
 }
 
 const Input = styled.input`
-  border: none;
-  border-bottom: 1px solid gray;
-  padding: 5px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  border-radius: 5px;
+  background: transparent;
+  border: 1px solid #c0b4c5;
+  box-shadow: 0px 4px rgba(221, 214, 224, 0.25);
+  margin-bottom: 1em;
+  padding: 10px 5px;
   &:focus {
     outline: none;
   }

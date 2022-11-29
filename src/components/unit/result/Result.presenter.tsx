@@ -1,7 +1,23 @@
 import * as S from "./Result.styles";
 import Fade from "react-awesome-reveal";
+import { useEffect, useState } from "react";
+import { keyword } from "./data/Keyword_2023";
 
 export default function ResultUI() {
+  const [randomNum, setRandomNum] = useState<any>();
+
+  useEffect(() => {
+    const temp = getRandomNumber(keyword);
+    console.log(temp);
+    setRandomNum(temp);
+  }, []);
+
+  const getRandomNumber = (key: any) => {
+    const randomNumber = Math.floor(Math.random() * key.length);
+    return randomNumber;
+  };
+  console.log(randomNum);
+  console.log(keyword[randomNum]);
   return (
     <S.Wrapper>
       <Fade>
@@ -12,6 +28,7 @@ export default function ResultUI() {
           </S.InfoBox>
         </S.ThemeCard>
         <S.ThemeComment>Y H S </S.ThemeComment>
+        <S.ThemeComment>{keyword[randomNum]} </S.ThemeComment>
       </Fade>
     </S.Wrapper>
   );
