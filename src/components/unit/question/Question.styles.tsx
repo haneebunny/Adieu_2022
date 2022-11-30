@@ -4,8 +4,18 @@ export const Wrapper = styled.div`
   max-width: 500px;
   margin: 0 auto;
   padding: 10px;
-  background-image: url("https://images.unsplash.com/photo-1505506874110-6a7a69069a08?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80");
-  color: white;
+  border: 1px solid #c5b2cf;
+  border-radius: 8px;
+
+  font: "NanumSquareNeo-Variable";
+
+  @font-face {
+    font-family: "NanumSquareNeo-Variable";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2")
+      format("woff2");
+    font-weight: normal;
+    font-style: normal;
+  }
 `;
 
 export const Question = styled.div`

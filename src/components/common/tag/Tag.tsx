@@ -35,7 +35,7 @@ export default function Tag(props: any) {
     props.setTagItem(e.target.value);
   };
 
-  console.log(props.tagItem, props.tagList);
+  // console.log(props.tagItem, props.tagList);
   return (
     <TagBox>
       {props.tagList?.map((tagItem: any, index: number) => {

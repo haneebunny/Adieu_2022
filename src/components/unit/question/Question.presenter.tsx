@@ -1,12 +1,17 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, FormEventHandler, SetStateAction, useState } from "react";
 import { MyDropzone } from "../../common/dropzone/DropZone";
 import DefaultInput from "../../common/input/DefaultInput";
 import MultipleInput from "../../common/input/MultipleInput";
 import Tag from "../../common/tag/Tag";
 import { questions_2022 } from "./data/Questions_2022";
+import { questions_people } from "./data/Question_people";
 import * as S from "./Question.styles";
 
 interface IQuestionProps {
+  setInputs: any;
+  inputs: any;
+  onSubmit: FormEventHandler<HTMLFormElement> | undefined;
+  onChangeInput: any;
   tagItem?: string;
   tagList?: string[];
   setTagItem?: Dispatch<SetStateAction<string>>;
@@ -19,15 +24,23 @@ export default function QuestionUI(props: IQuestionProps) {
 
   const [value, setValue] = useState();
   const [answers, setAnswers] = useState();
+  const questions = [questions_2022, questions_people];
   return (
     <S.Wrapper>
-      <form>
+      <form onSubmit={props.onSubmit}>
         <MyDropzone setImageUrl={setImageUrl} setFileUrl={setFileUrl} />
         {questions_2022.map((question: any, i: number) => (
           <div key={i}>
             <S.Question>
               <p>{question.question}</p>
-              {question.answer === "single" && <DefaultInput />}
+              {question.answer === "single" && (
+                <DefaultInput
+                  value={props.inputs[question.idx]}
+                  setValue={props.setInputs}
+                  name={question.idx}
+                  onChange={props.onChangeInput}
+                />
+              )}
               {question.answer === "multiple" && (
                 <MultipleInput
                   placeholder={question?.placeholder}
@@ -50,6 +63,7 @@ export default function QuestionUI(props: IQuestionProps) {
           setTagList={props.setTagList}
           editData={props.editData}
         />
+        <button />
       </form>
     </S.Wrapper>
   );

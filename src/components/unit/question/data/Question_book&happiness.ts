@@ -1,4 +1,4 @@
-export const questions_people = [
+export const questions_happiness = [
   {
     idx: 1,
     question: "올해의 책",

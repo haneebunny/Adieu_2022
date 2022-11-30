@@ -1,4 +1,4 @@
-export const questions_people = [
+export const questions_photo = [
   {
     idx: 1,
     question: "올해를 대표하는 사진",

@@ -22,7 +22,28 @@ export default function Question() {
   const [tagList, setTagList] = useState([]);
   const [imageUrl, setImageUrl] = useState(""); //썸네일 미리보기 url
   const [fileUrl, setFileUrl] = useState(""); //사진등록 url
+  const [inputs, setInputs] = useState({
+    1: "",
+    2: "",
+  });
+  const [adieu2022, set2022] = useState<any>();
 
+  const onChangeInput = (e: any) => {
+    console.log(e);
+    const { value, name } = e.target;
+    setInputs({
+      ...inputs,
+      [name]: value,
+    });
+    console.log(inputs);
+  };
+
+  const onSubmit = (e: any) => {
+    e.preventDefault();
+
+    set2022(inputs);
+    console.log(adieu2022);
+  };
   return (
     <>
       mandu : {mandu}
@@ -32,6 +53,10 @@ export default function Question() {
         tagList={tagList}
         setTagItem={setTagItem}
         setTagList={setTagList}
+        onSubmit={onSubmit}
+        onChangeInput={onChangeInput}
+        inputs={inputs}
+        setInputs={setInputs}
       />
     </>
   );

@@ -4,17 +4,21 @@ interface IInputTypes {
   placeholder?: string;
   value?: string;
   setValue?: any;
+  name?: any;
+  onChange?: any;
 }
 
 export default function DefaultInput({
   placeholder = "입력!💨",
   value,
   setValue,
+  name,
+  onChange,
 }: IInputTypes) {
   const onChangeInput = (event: any) => {
     setValue(event.target.value);
   };
-  return <Input placeholder={placeholder} onChange={onChangeInput} />;
+  return <Input placeholder={placeholder} onChange={onChange} name={name} />;
 }
 
 const Input = styled.input`
