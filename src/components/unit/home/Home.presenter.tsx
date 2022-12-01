@@ -24,6 +24,8 @@ export default function HomeUI() {
           </S.InputLabel>
         </S.MyForm>
       </S.Modal>
+      <a href="tel:010********">맹근 사람</a>
+      <a href="mailto:re____@naver.com">이메일</a>
     </S.Wrapper>
   );
 }
