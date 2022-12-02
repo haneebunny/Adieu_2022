@@ -6,8 +6,8 @@ export const Wrapper = styled.div`
   padding: 10px;
   border: 1px solid #c5b2cf;
   border-radius: 8px;
-
-  font: "NanumSquareNeo-Variable", "Noto Sans KR";
+  background-color: #c5b2cf;
+  font-family: "NanumSquareNeo-Variable", "Noto Sans KR";
 
   @font-face {
     font-family: "NanumSquareNeo-Variable";
