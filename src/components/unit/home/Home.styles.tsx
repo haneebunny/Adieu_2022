@@ -6,10 +6,9 @@ export const Wrapper = styled.div`
 `;
 
 export const Modal = styled.div`
-  width: 300px;
-  height: 300px;
-  background-color: #f38181;
-  font-family: "montserrat", sans-serif;
+  width: 500px;
+  height: 500px;
+  background-color: #ba9ceb;
   font-weight: 500;
   color: #fff;
 
@@ -25,7 +24,7 @@ export const NameInput = styled.input`
   color: #fff;
   padding-top: 18px;
   border: none;
-  background-color: #f38181;
+  background-color: #ba9ceb;
   &:focus {
     outline: none;
   }
