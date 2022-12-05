@@ -5,7 +5,11 @@ const nextConfig = {
 };
 
 module.exports = {
+  reactStrictMode: true,
   compiler: {
     emotion: true,
+  },
+  env: {
+    BASE_URL: process.env.BASE_URL,
   },
 };

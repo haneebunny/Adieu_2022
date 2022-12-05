@@ -6,9 +6,9 @@ export const Wrapper = styled.div`
   padding: 10px;
   border: 1px solid #c5b2cf;
   border-radius: 8px;
-  background-color: #c5b2cf;
+  background-color: #ffffff;
   font-family: "NanumSquareNeo-Variable", "Noto Sans KR";
-
+  color: #26282c;
   @font-face {
     font-family: "NanumSquareNeo-Variable";
     src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2")
@@ -23,4 +23,16 @@ export const Question = styled.div`
   p {
     margin: 5px 0px;
   }
+`;
+
+export const ButtonWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+export const ArrowButton = styled.button`
+  /* border: 1px solid #c5b2cf; */
+  background-color: #c5b2cf;
+  padding: 5px 8px;
+  cursor: pointer;
 `;

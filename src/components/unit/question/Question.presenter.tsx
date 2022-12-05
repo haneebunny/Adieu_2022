@@ -1,10 +1,19 @@
-import { Dispatch, FormEventHandler, SetStateAction, useState } from "react";
+import {
+  Dispatch,
+  FormEventHandler,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 import { MyDropzone } from "../../common/dropzone/DropZone";
 import DefaultInput from "../../common/input/DefaultInput";
 import MultipleInput from "../../common/input/MultipleInput";
 import Tag from "../../common/tag/Tag";
 import { questions_2022 } from "./data/Questions_2022";
+import { questions_happiness } from "./data/Question_book&happiness";
+import { questions_contents } from "./data/Question_contents";
 import { questions_people } from "./data/Question_people";
+import { questions_photo } from "./data/Question_photo";
 import * as S from "./Question.styles";
 
 interface IQuestionProps {
@@ -24,12 +33,26 @@ export default function QuestionUI(props: IQuestionProps) {
 
   const [value, setValue] = useState();
   const [answers, setAnswers] = useState();
-  const questions = [questions_2022, questions_people];
+  const questions = [
+    questions_2022,
+    questions_people,
+    questions_photo,
+    questions_contents,
+    questions_happiness,
+  ];
+  const [questionArr, setQuestionArr] = useState<any>(questions[0]);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const onClickNext = () => {
+    setCurrentPage((prev) => prev + 1);
+    setQuestionArr(questions[currentPage]);
+  };
   return (
     <S.Wrapper>
       <form onSubmit={props.onSubmit}>
         <MyDropzone setImageUrl={setImageUrl} setFileUrl={setFileUrl} />
-        {questions_2022.map((question: any, i: number) => (
+        <img src={imageUrl} />
+        {questionArr.map((question: any, i: number) => (
           <div key={i}>
             <S.Question>
               <p>{question.question}</p>
@@ -54,8 +77,19 @@ export default function QuestionUI(props: IQuestionProps) {
             </S.Question>
           </div>
         ))}
+        <S.ButtonWrapper>
+          <S.ArrowButton
+            onClick={() => alert("앞만 보고 나아가라고 이전 버튼을 없앰")}
+            type="button"
+          >
+            이전은 없어
+          </S.ArrowButton>
+          <S.ArrowButton onClick={onClickNext} type="button">
+            다음
+          </S.ArrowButton>
+        </S.ButtonWrapper>
+
         <S.Question>2022년을 대표하는 키워드</S.Question>
-        당신의 2023년 키워드는 ~~~ 랜덤으로 뽑기
         <Tag
           tagItem={props.tagItem}
           setTagItem={props.setTagItem}
@@ -63,7 +97,6 @@ export default function QuestionUI(props: IQuestionProps) {
           setTagList={props.setTagList}
           editData={props.editData}
         />
-        <button />
       </form>
     </S.Wrapper>
   );

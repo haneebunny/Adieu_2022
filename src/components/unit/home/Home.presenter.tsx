@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 import * as S from "./Home.styles";
@@ -23,9 +24,10 @@ export default function HomeUI() {
             <S.InputText>비밀번호</S.InputText>
           </S.InputLabel>
         </S.MyForm>
+        <Link href="/river">시작</Link>
+        <a href="tel:010********">맹근 사람한테 전화걸어 따지기</a>
+        <a href="mailto:re____@naver.com">이메일 보내기</a>
       </S.Modal>
-      <a href="tel:010********">맹근 사람</a>
-      <a href="mailto:re____@naver.com">이메일</a>
     </S.Wrapper>
   );
 }

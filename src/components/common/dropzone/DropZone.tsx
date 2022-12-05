@@ -26,12 +26,12 @@ export function MyDropzone(props: {
     formData.append("file", file);
     formData.append(
       "upload_preset",
-      "cloudinary://539563275386349:dQ5Jbxj7a5QM3x5a4boo6m9fQdw@hanisky"
+      "qhorewvv"
       // process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET
     );
 
     const result = fetch(
-      "https://api.cloudinary.com/v1_1/dop5piuwp/image/upload",
+      "https://api.cloudinary.com/v1_1/hanisky/image/upload",
       {
         method: "POST",
         body: formData,

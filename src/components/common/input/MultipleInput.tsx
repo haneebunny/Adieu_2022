@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { useRef } from "react";
 
 interface IInputTypes {
   placeholder?: string;
@@ -7,10 +8,11 @@ interface IInputTypes {
 }
 
 export default function MultipleInput({
-  placeholder = "입력!💨",
+  placeholder = "입력 후 엔터!💨",
   setValue = () => {},
   ...props
 }: IInputTypes) {
+  const inputRef = useRef<HTMLInputElement>(null);
   const onChangeInput = (event: any) => {
     setValue(event.target.value);
   };
@@ -28,6 +30,8 @@ export default function MultipleInput({
     li.appendChild(textNode);
 
     document.getElementById("answer")?.appendChild(li);
+
+    inputRef.current.value = "";
   };
   const onKeyPress = (event: any) => {
     if (event.key === "Enter") {
@@ -41,6 +45,7 @@ export default function MultipleInput({
         placeholder={placeholder}
         onChange={onChangeInput}
         onKeyDown={onKeyPress}
+        ref={inputRef}
       />
     </div>
   );
