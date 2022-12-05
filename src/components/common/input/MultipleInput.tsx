@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface IInputTypes {
   placeholder?: string;
@@ -10,37 +10,65 @@ interface IInputTypes {
 export default function MultipleInput({
   placeholder = "입력 후 엔터!💨",
   setValue = () => {},
+
   ...props
 }: IInputTypes) {
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const [list, setList] = useState([]);
+
   const onChangeInput = (event: any) => {
     setValue(event.target.value);
   };
 
   const onSubmit = () => {
-    // input창의 값을 가져와서
-    // li에 넣는다.
+    if (list.length > 2) return;
     const addValue: any = props.value;
 
-    const li = document.createElement("li");
+    setList([
+      ...list,
+      {
+        id: Date.now(),
+        text: addValue,
+      },
+    ]);
 
-    li.setAttribute("id", addValue);
+    // const tempArr = list;
 
-    const textNode = document.createTextNode(addValue);
-    li.appendChild(textNode);
+    // tempArr.push(addValue);
 
-    document.getElementById("answer")?.appendChild(li);
+    // setList([...tempArr]);
 
     inputRef.current.value = "";
+  };
+
+  const onClickDelete = (event: any) => {
+    const tempArr = list.filter(
+      (el) =>
+        // if (el?.id !== Number(event?.target.id)) return el;
+        el?.id !== Number(event?.target.id)
+    );
+    console.log(tempArr);
+    setList([...tempArr]);
   };
   const onKeyPress = (event: any) => {
     if (event.key === "Enter") {
       onSubmit();
     }
   };
+
   return (
     <div>
-      <ol id="answer"></ol>
+      <ol id="answer">
+        {list?.map((el: any, i: number) => (
+          <li key={i}>
+            <span>{el?.text}</span>
+            <XButton type="button" id={el?.id} onClick={onClickDelete}>
+              X
+            </XButton>
+          </li>
+        ))}
+      </ol>
       <Input
         placeholder={placeholder}
         onChange={onChangeInput}
@@ -64,4 +92,12 @@ const Input = styled.input`
   &:focus {
     outline: none;
   }
+`;
+
+const XButton = styled.button`
+  border: none;
+  background: transparent;
+  font-size: 0.4em;
+  padding: 3px;
+  margin-left: 5px;
 `;
