@@ -34,7 +34,7 @@ export default function Question() {
   const [tagItem, setTagItem] = useState("");
   const [tagList, setTagList] = useState([]);
   const [imageUrl, setImageUrl] = useState(""); //썸네일 미리보기 url
-  const [fileUrl, setFileUrl] = useState(""); //사진등록 url
+  const [fileUrls, setFileUrls] = useState([]); //사진등록 url
   const [inputs, setInputs] = useState({
     1: "",
     2: "",
@@ -64,6 +64,13 @@ export default function Question() {
     set2022(inputs);
     console.log(adieu2022);
   };
+
+  const onChangeFileUrls = (fileUrl: string, index: number) => {
+    const newFileUrls = [...fileUrls];
+    newFileUrls[index] = fileUrl;
+    setFileUrls(newFileUrls);
+  };
+
   return (
     <>
       {/* mandu : {mandu}
@@ -74,10 +81,10 @@ export default function Question() {
         inputs={inputs}
         questionArr={questionArr}
         imageUrl={imageUrl}
-        fileUrl={fileUrl}
+        fileUrls={fileUrls}
         setInputs={setInputs}
         setImageUrl={setImageUrl}
-        setFileUrl={setFileUrl}
+        setFileUrls={setFileUrls}
         setTagItem={setTagItem}
         setTagList={setTagList}
         onSubmit={onSubmit}

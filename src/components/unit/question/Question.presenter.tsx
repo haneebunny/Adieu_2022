@@ -10,6 +10,7 @@ import { MyDropzone } from "../../common/dropzone/DropZone";
 import DefaultInput from "../../common/input/DefaultInput";
 import MultipleInput from "../../common/input/MultipleInput";
 import Tag from "../../common/tag/Tag";
+import Uploads01 from "../../common/uploads/01/Uploads01.container";
 import { questions_2022 } from "./data/Questions_2022";
 import { questions_happiness } from "./data/Question_book&happiness";
 import { questions_contents } from "./data/Question_contents";
@@ -22,6 +23,7 @@ interface IQuestionProps {
   setImageUrl: (arg0: string) => void;
   setFileUrl: (arg0: any) => any;
   onClickNext: MouseEventHandler<HTMLButtonElement>;
+  onChangeFileUrls: (fileUrl: string, index: number) => void;
   setInputs: any;
   inputs: any;
   onSubmit: any;
@@ -32,6 +34,7 @@ interface IQuestionProps {
   setTagList?: Dispatch<SetStateAction<never[]>>;
   editData?: any;
   questionArr?: string[];
+  fileUrls?: [];
 }
 export default function QuestionUI(props: IQuestionProps) {
   const [value, setValue] = useState();
@@ -78,6 +81,15 @@ export default function QuestionUI(props: IQuestionProps) {
             </S.Question>
           </div>
         ))}
+        {props.fileUrls?.map((el: any, i: number) => (
+          <Uploads01
+            key={i}
+            index={i}
+            fileUrl={el}
+            onChangeFileUrls={props.onChangeFileUrls}
+          />
+        ))}
+
         <S.ButtonWrapper>
           <S.ArrowButton
             onClick={() => alert("앞만 보고 나아가라고 이전 버튼을 없앰")}
