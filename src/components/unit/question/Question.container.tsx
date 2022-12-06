@@ -56,7 +56,6 @@ export default function Question() {
   const onClickNext = () => {
     setCurrentPage((prev) => prev + 1);
     setQuestionArr(questions[currentPage]);
-    localStorage.setItem(`{currentPage-1}장`, inputs);
   };
 
   const onSubmit = (e: any) => {
@@ -74,6 +73,8 @@ export default function Question() {
         tagList={tagList}
         inputs={inputs}
         questionArr={questionArr}
+        imageUrl={imageUrl}
+        fileUrl={fileUrl}
         setInputs={setInputs}
         setImageUrl={setImageUrl}
         setFileUrl={setFileUrl}

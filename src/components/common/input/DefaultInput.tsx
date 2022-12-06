@@ -6,6 +6,7 @@ interface IInputTypes {
   setValue?: any;
   name?: any;
   onChange?: any;
+  className?: any;
 }
 
 export default function DefaultInput({
@@ -14,14 +15,19 @@ export default function DefaultInput({
   setValue,
   name,
   onChange,
+  ...props
 }: IInputTypes) {
   const onChangeInput = (event: any) => {
     setValue(event.target.value);
   };
-  return <Input placeholder={placeholder} onChange={onChange} name={name} />;
+  return (
+    <div className={props.className}>
+      <Input placeholder={placeholder} onChange={onChange} name={name} />
+    </div>
+  );
 }
 
-const Input = styled.input`
+export const Input = styled.input`
   width: 100%;
   display: flex;
   align-items: center;

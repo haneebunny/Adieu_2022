@@ -35,6 +35,8 @@ export default function MultipleInput({
       },
     ]);
 
+    // 모은 리스트 배열을 가공해서 모은 걸 주기. ???
+
     // setValue(list);
 
     // const tempArr = list;

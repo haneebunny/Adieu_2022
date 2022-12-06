@@ -44,13 +44,13 @@ export default function QuestionUI(props: IQuestionProps) {
           setImageUrl={props.setImageUrl}
           setFileUrl={props.setFileUrl}
         />
-        <img src={props.imageUrl} />
+        <S.Thumbnail src={props.imageUrl} />
         {props.questionArr?.map((question: any, i: number) => (
           <div key={i}>
             <S.Question>
               <p>{question.question}</p>
               {question.answer === "single" && (
-                <DefaultInput
+                <S.OneInput
                   value={props.inputs[question.idx]}
                   setValue={props.setInputs}
                   name={question.idx}
@@ -67,10 +67,13 @@ export default function QuestionUI(props: IQuestionProps) {
                 />
               )}
               {question.answer === "image" && (
-                <MyDropzone
-                  setImageUrl={props.setImageUrl}
-                  setFileUrl={props.setFileUrl}
-                />
+                <div>
+                  <MyDropzone
+                    setImageUrl={props.setImageUrl}
+                    setFileUrl={props.setFileUrl}
+                  />
+                  <S.Thumbnail src={props.imageUrl} />
+                </div>
               )}
             </S.Question>
           </div>
@@ -82,7 +85,7 @@ export default function QuestionUI(props: IQuestionProps) {
           >
             이전은 없어
           </S.ArrowButton>
-          <S.ArrowButton onClick={props.onSubmit} type="button">
+          <S.ArrowButton onClick={props.onClickNext} type="button">
             다음
           </S.ArrowButton>
         </S.ButtonWrapper>

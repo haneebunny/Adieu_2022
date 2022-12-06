@@ -1,11 +1,12 @@
 import styled from "@emotion/styled";
+import DefaultInput, { Input } from "../../common/input/DefaultInput";
 
 export const Wrapper = styled.div`
   max-width: 500px;
   height: 100vh;
   margin: 0 auto;
-  padding: 10px;
-  border: 1px solid #c5b2cf;
+  padding: 30px;
+  border: 1px solid #eedca0;
 
   background-color: #ffffff;
   font-family: "NanumSquareNeo-Variable", "Noto Sans KR";
@@ -26,6 +27,11 @@ export const Question = styled.div`
   }
 `;
 
+export const Thumbnail = styled.img`
+  width: 150px;
+  height: 150px;
+`;
+
 export const ButtonWrapper = styled.div`
   display: flex;
   flex-direction: row;
@@ -33,7 +39,21 @@ export const ButtonWrapper = styled.div`
 `;
 export const ArrowButton = styled.button`
   /* border: 1px solid #c5b2cf; */
-  background-color: #c5b2cf;
+  border: none;
+  border-radius: 4px;
+  background-color: #eedca0;
   padding: 5px 8px;
   cursor: pointer;
+
+  color: #443d33;
+`;
+
+export const OneInput = styled(DefaultInput)`
+  ${Input} {
+    /* background-color: #c5b2cf;
+    color: white; */
+    border: 1px solid #eedca0;
+    font-family: "NanumSquareNeo-Variable", "Noto Sans KR";
+    padding: 12px 10px;
+  }
 `;
