@@ -7,7 +7,7 @@ export const Wrapper = styled.div`
 
 export const Modal = styled.div`
   width: 500px;
-  height: 500px;
+  height: 100vh;
   background-color: #ba9ceb;
   font-weight: 500;
   color: #fff;
@@ -16,6 +16,17 @@ export const Modal = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+`;
+
+export const Login = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
+
+export const FormWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 
 export const NameInput = styled.input`
@@ -58,10 +69,12 @@ export const InputText = styled.span`
 `;
 
 export const MyForm = styled.form`
-  width: 30%;
+  width: 80%;
   position: relative;
   height: 60px;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 
   ${NameInput}:focus + ${InputLabel} ${InputText} {
     transform: translateY(-150%);
@@ -84,4 +97,11 @@ export const MyForm = styled.form`
   ${NameInput}:valid + ${InputLabel}::after {
     transform: translateX(0%);
   }
+`;
+
+export const StartButton = styled.div`
+  /* padding: 10px; */
+  border: 1px solid white;
+  padding: 4px 5px;
+  border-radius: 4px;
 `;

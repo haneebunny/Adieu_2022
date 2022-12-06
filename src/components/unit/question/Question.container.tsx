@@ -1,4 +1,9 @@
 import { useRef, useEffect, useState } from "react";
+import { questions_2022 } from "./data/Questions_2022";
+import { questions_happiness } from "./data/Question_book&happiness";
+import { questions_contents } from "./data/Question_contents";
+import { questions_people } from "./data/Question_people";
+import { questions_photo } from "./data/Question_photo";
 import QuestionUI from "./Question.presenter";
 
 function usePrevState(state: any) {
@@ -14,6 +19,14 @@ export default function Question() {
   const [mandu, setMandu] = useState("만두");
   const prevMandu = usePrevState(mandu);
 
+  const questions = [
+    questions_2022,
+    questions_people,
+    questions_photo,
+    questions_contents,
+    questions_happiness,
+  ];
+
   const onClickButton = () => {
     setMandu((prev) => "뜨거운" + prev);
   };
@@ -27,6 +40,8 @@ export default function Question() {
     2: "",
   });
   const [adieu2022, set2022] = useState<any>();
+  const [questionArr, setQuestionArr] = useState<any>(questions[0]);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const onChangeInput = (e: any) => {
     console.log(e);
@@ -38,6 +53,12 @@ export default function Question() {
     console.log(inputs);
   };
 
+  const onClickNext = () => {
+    setCurrentPage((prev) => prev + 1);
+    setQuestionArr(questions[currentPage]);
+    localStorage.setItem(`{currentPage-1}장`, inputs);
+  };
+
   const onSubmit = (e: any) => {
     e.preventDefault();
 
@@ -46,17 +67,21 @@ export default function Question() {
   };
   return (
     <>
-      mandu : {mandu}
-      prevMandu : {prevMandu};<button onClick={onClickButton}>데펴</button>
+      {/* mandu : {mandu}
+      prevMandu : {prevMandu};<button onClick={onClickButton}>데펴</button> */}
       <QuestionUI
         tagItem={tagItem}
         tagList={tagList}
+        inputs={inputs}
+        questionArr={questionArr}
+        setInputs={setInputs}
+        setImageUrl={setImageUrl}
+        setFileUrl={setFileUrl}
         setTagItem={setTagItem}
         setTagList={setTagList}
         onSubmit={onSubmit}
         onChangeInput={onChangeInput}
-        inputs={inputs}
-        setInputs={setInputs}
+        onClickNext={onClickNext}
       />
     </>
   );

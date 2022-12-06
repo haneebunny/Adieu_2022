@@ -26,8 +26,7 @@ export function MyDropzone(props: {
     formData.append("file", file);
     formData.append(
       "upload_preset",
-      "qhorewvv"
-      // process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET
+      process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET
     );
 
     const result = fetch(

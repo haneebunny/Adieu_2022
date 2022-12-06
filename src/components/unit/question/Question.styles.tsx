@@ -2,10 +2,11 @@ import styled from "@emotion/styled";
 
 export const Wrapper = styled.div`
   max-width: 500px;
+  height: 100vh;
   margin: 0 auto;
   padding: 10px;
   border: 1px solid #c5b2cf;
-  border-radius: 8px;
+
   background-color: #ffffff;
   font-family: "NanumSquareNeo-Variable", "Noto Sans KR";
   color: #26282c;

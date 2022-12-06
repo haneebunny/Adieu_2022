@@ -1,6 +1,7 @@
 import {
   Dispatch,
   FormEventHandler,
+  MouseEventHandler,
   SetStateAction,
   useEffect,
   useState,
@@ -17,42 +18,34 @@ import { questions_photo } from "./data/Question_photo";
 import * as S from "./Question.styles";
 
 interface IQuestionProps {
+  imageUrl: string;
+  setImageUrl: (arg0: string) => void;
+  setFileUrl: (arg0: any) => any;
+  onClickNext: MouseEventHandler<HTMLButtonElement>;
   setInputs: any;
   inputs: any;
-  onSubmit: FormEventHandler<HTMLFormElement> | undefined;
+  onSubmit: any;
   onChangeInput: any;
   tagItem?: string;
   tagList?: string[];
   setTagItem?: Dispatch<SetStateAction<string>>;
   setTagList?: Dispatch<SetStateAction<never[]>>;
   editData?: any;
+  questionArr?: string[];
 }
 export default function QuestionUI(props: IQuestionProps) {
-  const [imageUrl, setImageUrl] = useState(""); //썸네일 미리보기 url
-  const [fileUrl, setFileUrl] = useState(""); //사진등록 url
-
   const [value, setValue] = useState();
   const [answers, setAnswers] = useState();
-  const questions = [
-    questions_2022,
-    questions_people,
-    questions_photo,
-    questions_contents,
-    questions_happiness,
-  ];
-  const [questionArr, setQuestionArr] = useState<any>(questions[0]);
-  const [currentPage, setCurrentPage] = useState(1);
 
-  const onClickNext = () => {
-    setCurrentPage((prev) => prev + 1);
-    setQuestionArr(questions[currentPage]);
-  };
   return (
     <S.Wrapper>
       <form onSubmit={props.onSubmit}>
-        <MyDropzone setImageUrl={setImageUrl} setFileUrl={setFileUrl} />
-        <img src={imageUrl} />
-        {questionArr.map((question: any, i: number) => (
+        <MyDropzone
+          setImageUrl={props.setImageUrl}
+          setFileUrl={props.setFileUrl}
+        />
+        <img src={props.imageUrl} />
+        {props.questionArr?.map((question: any, i: number) => (
           <div key={i}>
             <S.Question>
               <p>{question.question}</p>
@@ -67,12 +60,17 @@ export default function QuestionUI(props: IQuestionProps) {
               {question.answer === "multiple" && (
                 <MultipleInput
                   placeholder={question?.placeholder}
-                  value={value}
-                  setValue={setValue}
+                  value={props.inputs[question.idx]}
+                  name={question.idx}
+                  setValue={props.setInputs}
+                  onChange={props.onChangeInput}
                 />
               )}
               {question.answer === "image" && (
-                <MyDropzone setImageUrl={setImageUrl} setFileUrl={setFileUrl} />
+                <MyDropzone
+                  setImageUrl={props.setImageUrl}
+                  setFileUrl={props.setFileUrl}
+                />
               )}
             </S.Question>
           </div>
@@ -84,12 +82,11 @@ export default function QuestionUI(props: IQuestionProps) {
           >
             이전은 없어
           </S.ArrowButton>
-          <S.ArrowButton onClick={onClickNext} type="button">
+          <S.ArrowButton onClick={props.onSubmit} type="button">
             다음
           </S.ArrowButton>
         </S.ButtonWrapper>
 
-        <S.Question>2022년을 대표하는 키워드</S.Question>
         <Tag
           tagItem={props.tagItem}
           setTagItem={props.setTagItem}

@@ -5,6 +5,8 @@ interface IInputTypes {
   placeholder?: string;
   value?: string;
   setValue?: any;
+  name?: string;
+  onChange?: any;
 }
 
 export default function MultipleInput({
@@ -32,6 +34,8 @@ export default function MultipleInput({
         text: addValue,
       },
     ]);
+
+    // setValue(list);
 
     // const tempArr = list;
 
@@ -71,9 +75,10 @@ export default function MultipleInput({
       </ol>
       <Input
         placeholder={placeholder}
-        onChange={onChangeInput}
+        onChange={props.onChange}
         onKeyDown={onKeyPress}
         ref={inputRef}
+        name={props.name}
       />
     </div>
   );
