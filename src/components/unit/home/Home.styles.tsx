@@ -10,7 +10,7 @@ export const Modal = styled.div`
   height: 100vh;
   background-color: #ba9ceb;
   font-weight: 500;
-  color: #fff;
+  color: white;
 
   display: flex;
   flex-direction: column;
