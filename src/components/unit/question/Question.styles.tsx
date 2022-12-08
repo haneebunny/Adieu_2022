@@ -3,7 +3,7 @@ import DefaultInput, { Input } from "../../common/input/DefaultInput";
 
 export const Wrapper = styled.div`
   max-width: 500px;
-  height: 100vh;
+  height: 100%;
   margin: 0 auto;
   padding: 30px;
   border: 1px solid #eedca0;
