@@ -88,6 +88,7 @@ export default function MultipleInput({
 
 const Input = styled.input`
   width: 100%;
+  background-color: white;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
