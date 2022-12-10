@@ -47,7 +47,7 @@ export default function QuestionUI(props: IQuestionProps) {
           setImageUrl={props.setImageUrl}
           setFileUrl={props.setFileUrl}
         />
-        <S.Thumbnail src={props.imageUrl} />
+        <S.Thumbnail src={props.imageUrl || "img/[maple]wind-spirit-1.webp"} />
         {props.questionArr?.map((question: any, i: number) => (
           <div key={i}>
             <S.Question>
