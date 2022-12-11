@@ -69,6 +69,7 @@ const TagBox = styled.div`
   border: 1px solid #a3a8b7;
   box-shadow: 0px 4px rgba(217, 214, 224, 0.25);
   margin-bottom: 1em;
+  background-color: white;
 `;
 
 const TagItem = styled.div`
@@ -104,4 +105,6 @@ const TagInput = styled.input`
   margin-left: 0.4em;
   border: none;
   outline: none;
+  background-color: transparent;
+  color: #26282c;
 `;
