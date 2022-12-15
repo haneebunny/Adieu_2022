@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import DefaultInput, { Input } from "../../common/input/DefaultInput";
+import MultipleInput from "../../common/input/MultipleInput";
 
 export const Wrapper = styled.div`
   max-width: 500px;
@@ -52,6 +53,14 @@ export const OneInput = styled(DefaultInput)`
   ${Input} {
     /* background-color: #c5b2cf;
     color: white; */
+    border: 1px solid #eedca0;
+    font-family: "NanumSquareNeo-Variable", "Noto Sans KR";
+    padding: 12px 10px;
+  }
+`;
+
+export const MulInput = styled(MultipleInput)`
+  ${Input} {
     border: 1px solid #eedca0;
     font-family: "NanumSquareNeo-Variable", "Noto Sans KR";
     padding: 12px 10px;

@@ -61,7 +61,7 @@ export default function QuestionUI(props: IQuestionProps) {
                 />
               )}
               {question.answer === "multiple" && (
-                <MultipleInput
+                <S.MulInput
                   placeholder={question?.placeholder}
                   value={props.inputs[question.idx]}
                   name={question.idx}
