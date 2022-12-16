@@ -1,5 +1,10 @@
 import { useState } from "react";
-import { collection, getFirestore, addDoc } from "firebase/firestore/lite";
+import {
+  collection,
+  getFirestore,
+  addDoc,
+  getDocs,
+} from "firebase/firestore/lite";
 import { firebaseApp } from "../../../../../pages/_app";
 import { useRouter } from "next/router";
 import { MyInput, Wrapper } from "./What.styles";
@@ -20,6 +25,9 @@ export default function WhatMusic() {
   async function onClickSubmit() {
     console.log(inputs);
     const music = collection(getFirestore(firebaseApp), "music");
+    console.log("music:::", music);
+    const result = await getDocs(music);
+    console.log(result);
     await addDoc(music, {
       ...inputs,
     });

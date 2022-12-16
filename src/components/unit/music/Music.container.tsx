@@ -7,27 +7,43 @@ import {
   DocumentData,
 } from "firebase/firestore/lite";
 import { firebaseApp } from "../../../../pages/_app";
-const musicList = [
-  { title: "비밀의 화원", id: "eGXJs7zOHC4" },
-  { title: "cups", id: "cmSbXsFE3l8" },
-];
 
-let randomMusic = musicList[Math.floor(Math.random() * musicList.length)];
+// let randomMusic = musicList[Math.floor(Math.random() * musicList.length)];
 
 export default function Music() {
   const [musicTitle, setMusicTitle] = useState("");
-  const [dataMusics, setDataMusics] = useState<DocumentData[]>([]);
+  const [dataMusics, setDataMusics] = useState<any>();
+  const [playList, setPlayList] = useState([]);
+
   useEffect(() => {
     async function fetchMusics() {
       const music = collection(getFirestore(firebaseApp), "music");
       const result = await getDocs(music);
+      console.log(result);
       const musics = result.docs.map((el) => el.data());
+      console.log(musics);
       setDataMusics(musics);
     }
     fetchMusics();
-    console.log(dataMusics);
   }, []);
 
+  useEffect(() => {
+    const tempList = dataMusics?.map((el: any) =>
+      youtube_parser(el.url).toString()
+    );
+    setPlayList(tempList);
+
+    // 파이어베이스에서 받아온 데이터로 랜덤 목록 생성
+  }, [dataMusics]);
+
+  function youtube_parser(url: string) {
+    var regExp =
+      /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+    var match = url.match(regExp);
+    return match && match[7].length == 11 ? match[7] : false;
+  }
+
+  console.log(dataMusics);
   const options: YouTubeProps["opts"] = {
     width: "1280",
     height: "720",
@@ -37,7 +53,7 @@ export default function Music() {
       rel: 0, // 재생 종료 시 플레이어에서 관련 동영상 표시 X
       loop: 1, // 동영상 반복 재생 O(목록은 목록을 순회함)
       // list: "PLC77007E23FF423C6",
-      playlist: "eGXJs7zOHC4,cmSbXsFE3l8,ubqXO_ghb2k", // musicList에서 id만 뽑아서? 안되나
+      playlist: playList, // musicList에서 id만 뽑아서? 안되나
       shuffle: 1,
     },
   };
@@ -66,7 +82,7 @@ export default function Music() {
   return (
     <div>
       <YouTube
-        videoId={randomMusic.id}
+        // videoId={randomMusic.id}
         opts={options}
         onReady={getPlayerCode}
       />
