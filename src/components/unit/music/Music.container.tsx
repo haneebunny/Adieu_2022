@@ -1,6 +1,12 @@
 import { useEffect, useState } from "react";
 import YouTube, { YouTubePlayer, YouTubeProps } from "react-youtube";
-
+import {
+  collection,
+  getFirestore,
+  getDocs,
+  DocumentData,
+} from "firebase/firestore/lite";
+import { firebaseApp } from "../../../../pages/_app";
 const musicList = [
   { title: "비밀의 화원", id: "eGXJs7zOHC4" },
   { title: "cups", id: "cmSbXsFE3l8" },
@@ -10,6 +16,17 @@ let randomMusic = musicList[Math.floor(Math.random() * musicList.length)];
 
 export default function Music() {
   const [musicTitle, setMusicTitle] = useState("");
+  const [dataMusics, setDataMusics] = useState<DocumentData[]>([]);
+  useEffect(() => {
+    async function fetchMusics() {
+      const music = collection(getFirestore(firebaseApp), "music");
+      const result = await getDocs(music);
+      const musics = result.docs.map((el) => el.data());
+      setDataMusics(musics);
+    }
+    fetchMusics();
+    console.log(dataMusics);
+  }, []);
 
   const options: YouTubeProps["opts"] = {
     width: "1280",
