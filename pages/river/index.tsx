@@ -1,4 +1,4 @@
-import Question from "../../src/components/unit/question/Question.container";
+import Question from "../../src/components/unit/question/Question";
 
 export default function QuestionPage() {
   return <Question />;

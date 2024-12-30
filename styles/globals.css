@@ -1,10 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 html,
 body {
-  font: "NanumSquareNeo-Variable";
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: "Ownglyph_ParkDaHyun", -apple-system, BlinkMacSystemFont,
+    Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans,
+    Helvetica Neue, sans-serif;
 }
 
 a {
@@ -24,6 +28,37 @@ a {
     color: white;
     background: black;
   }
+}
+
+/* animation keyframes */
+
+@keyframes pageFlip {
+  0% {
+    transform: perspective(1000px) rotateY(0deg);
+    opacity: 1;
+  }
+  50% {
+    transform: perspective(1000px) rotateY(-90deg);
+    opacity: 0.8;
+  }
+  100% {
+    transform: perspective(1000px) rotateY(-180deg);
+    opacity: 0;
+  }
+}
+
+.page-enter {
+  animation: pageFlip 1s ease-in-out forwards;
+}
+
+/* font */
+
+@font-face {
+  font-family: "Ownglyph_ParkDaHyun";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/2411-3@1.0/Ownglyph_ParkDaHyun.woff2")
+    format("woff2");
+  font-weight: normal;
+  font-style: normal;
 }
 
 @font-face {
