@@ -2,7 +2,10 @@
   "name": "adieu-next",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://haneebunny.github.io/Adieu_2022/",
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
@@ -29,6 +32,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.4.20",
+    "gh-pages": "^6.2.0",
     "postcss": "^8.4.49",
     "tailwindcss": "^3.4.16"
   }
