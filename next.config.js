@@ -10,6 +10,8 @@ module.exports = {
     emotion: true,
   },
   env: {
-    BASE_URL: process.env.BASE_URL,
+    output: "export",
+    basePath: "/Adieu_2022", // GitHub Pages에서 사용하는 경로
+    assetPrefix: "/Adieu_2022", // 정적 자산 경로
   },
 };
