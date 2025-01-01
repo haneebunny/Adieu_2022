@@ -32,17 +32,15 @@ export default function Question() {
     >
       <div className="flex flex-row items-baseline gap-4">
         {/* 나의 이름은 텍스트 */}
-        <p className="text-4xl text-white font-bold animate-fadeIn">
-          나의 이름은
-        </p>
+        <p className="text-white font-bold animate-fadeIn">나의 이름은</p>
 
         {/* input 필드와 밑줄 */}
-        <div className="relative w-64">
+        <div className="relative w-32">
           <input
             type="text"
             value={name}
             onChange={handleChange}
-            className="w-full text-center text-white p-2 bg-transparent text-4xl focus:outline-none z-10"
+            className="w-full text-center text-white p-2 bg-transparent focus:outline-none z-10"
             style={{ animationDelay: "1.5s" }} // input 타이밍 맞추기
           />
           {/* 밑줄 애니메이션 */}
@@ -53,7 +51,7 @@ export default function Question() {
         {name.trim() && (
           <button
             onClick={handleNext}
-            className="text-3xl text-white hover:scale-150 transition-transform duration-300"
+            className="  text-white hover:scale-150 transition-transform duration-300"
           >
             •
           </button>

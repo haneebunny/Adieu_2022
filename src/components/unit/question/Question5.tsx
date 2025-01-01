@@ -54,19 +54,19 @@ export default function Question5() {
     >
       {/* 첫 번째 질문 */}
       <div className="flex flex-col items-center text-center animate-fadeIn mb-20">
-        <p className="text-4xl text-white font-bold mb-6">
+        <p className="  text-white font-bold mb-6">
           올해의 소울푸드 소개 좀 시켜줘
         </p>
         <input
           type="text"
           value={answer19}
           onChange={(e) => setAnswer19(e.target.value)}
-          className="text-center min-w-[400px] max-w-[800px] w-3/4 text-white p-2 border-b-2 border-white bg-transparent text-4xl focus:outline-none"
+          className="text-center min-w-2/3 max-w-[800px] w-3/4 text-white p-2 border-b-2 border-white bg-transparent   focus:outline-none"
         />
         {step === 1 && answer19.trim() && (
           <button
             onClick={handleNextStep}
-            className="text-xl text-white mt-4 hover:scale-150 transition-transform duration-300"
+            className="  text-white mt-4 hover:scale-150 transition-transform duration-300"
           >
             사줘
           </button>
@@ -76,20 +76,20 @@ export default function Question5() {
       {/* 두 번째 질문 */}
       {step >= 2 && (
         <div className="flex flex-col items-center text-center animate-fadeIn mb-20">
-          <p className="text-4xl text-white font-bold mb-6">
-            칭찬받았거나 들었던 얘기 중에 좋았던 거 있어?! 나만 있나? 난
-            캡쳐본도 있어
+          <p className="  text-white font-bold mb-6">
+            칭찬받았거나 들었던 얘기 중에 좋았던 거 있어?! <br />
+            나만 있나? 난 캡쳐본도 있어
           </p>
           <input
             type="text"
             value={answer20}
             onChange={(e) => setAnswer20(e.target.value)}
-            className="text-center min-w-[400px] max-w-[800px] w-3/4 text-white p-2 border-b-2 border-white bg-transparent text-4xl focus:outline-none"
+            className="text-center min-w-2/3 max-w-[800px] w-3/4 text-white p-2 border-b-2 border-white bg-transparent   focus:outline-none"
           />
           {step === 2 && answer20.trim() && (
             <button
               onClick={handleNextStep}
-              className="text-xl text-white mt-4 hover:scale-150 transition-transform duration-300"
+              className="  text-white mt-4 hover:scale-150 transition-transform duration-300"
             >
               증빙자료 있지?!
             </button>
@@ -100,19 +100,17 @@ export default function Question5() {
       {/* 세 번째 질문 */}
       {step >= 3 && (
         <div className="flex flex-col items-center text-center animate-fadeIn mb-20">
-          <p className="text-4xl text-white font-bold mb-6">
-            올해의 취미는 뭐였어?
-          </p>
+          <p className="  text-white font-bold mb-6">올해의 취미는 뭐였어?</p>
           <input
             type="text"
             value={answer21}
             onChange={(e) => setAnswer21(e.target.value)}
-            className="text-center min-w-[400px] max-w-[800px] w-3/4 text-white p-2 border-b-2 border-white bg-transparent text-4xl focus:outline-none"
+            className="text-center min-w-2/3 max-w-[800px] w-3/4 text-white p-2 border-b-2 border-white bg-transparent   focus:outline-none"
           />
           {step === 3 && answer21.trim() && (
             <button
               onClick={handleNextStep}
-              className="text-xl text-white mt-4 hover:scale-150 transition-transform duration-300"
+              className="  text-white mt-4 hover:scale-150 transition-transform duration-300"
             >
               취미가 멋진데!
             </button>
@@ -123,19 +121,17 @@ export default function Question5() {
       {/* 네 번째 질문 */}
       {step >= 4 && (
         <div className="flex flex-col items-center text-center animate-fadeIn mb-20">
-          <p className="text-4xl text-white font-bold mb-6">
-            새로 생긴 취미가 있어?
-          </p>
+          <p className="  text-white font-bold mb-6">새로 생긴 취미가 있어?</p>
           <input
             type="text"
             value={answer22}
             onChange={(e) => setAnswer22(e.target.value)}
-            className="text-center min-w-[400px] max-w-[800px] w-3/4 text-white p-2 border-b-2 border-white bg-transparent text-4xl focus:outline-none"
+            className="text-center min-w-2/3 max-w-[800px] w-3/4 text-white p-2 border-b-2 border-white bg-transparent   focus:outline-none"
           />
           {step === 4 && answer22.trim() && (
             <button
               onClick={handleNextStep}
-              className="text-xl text-white mt-4 hover:scale-150 transition-transform duration-300"
+              className="  text-white mt-4 hover:scale-150 transition-transform duration-300"
             >
               취미가 생겼구나!
             </button>
@@ -146,19 +142,19 @@ export default function Question5() {
       {/* 다섯 번째 질문 */}
       {step >= 5 && (
         <div className="flex flex-col items-center text-center animate-fadeIn mb-20">
-          <p className="text-4xl text-white font-bold mb-6">
+          <p className="  text-white font-bold mb-6">
             내년엔 어떤 걸 도전해보고 싶어? 커리어적으로 말고 just for fun~
           </p>
           <input
             type="text"
             value={answer23}
             onChange={(e) => setAnswer23(e.target.value)}
-            className="text-center min-w-[400px] max-w-[800px] w-3/4 text-white p-2 border-b-2 border-white bg-transparent text-4xl focus:outline-none"
+            className="text-center min-w-2/3 max-w-[800px] w-3/4 text-white p-2 border-b-2 border-white bg-transparent   focus:outline-none"
           />
           {step === 5 && answer23.trim() && (
             <button
               onClick={handleNextPage}
-              className="text-xl text-white mt-4 hover:scale-150 transition-transform duration-300"
+              className="  text-white mt-4 hover:scale-150 transition-transform duration-300"
             >
               나도 가취해
             </button>

@@ -50,19 +50,19 @@ export default function Question4() {
     >
       {/* 첫 번째 질문 */}
       <div className="flex flex-col items-center text-center animate-fadeIn mb-20">
-        <p className="text-4xl text-white font-bold mb-6">
+        <p className="  text-white font-bold mb-6">
           올해 책 읽었어? 어떤 책을 올해의 책으로 꼽을 수 있을까?
         </p>
         <input
           type="text"
           value={answer15}
           onChange={(e) => setAnswer15(e.target.value)}
-          className="text-center min-w-[400px] max-w-[800px] w-3/4 text-white p-2 border-b-2 border-white bg-transparent text-4xl focus:outline-none"
+          className="text-center min-w-2/3 max-w-[800px] w-3/4 text-white p-2 border-b-2 border-white bg-transparent   focus:outline-none"
         />
         {step === 1 && answer15.trim() && (
           <button
             onClick={handleNextStep}
-            className="text-xl text-white mt-4 hover:scale-150 transition-transform duration-300"
+            className="  text-white mt-4 hover:scale-150 transition-transform duration-300"
           >
             올해의 책이구나!
           </button>
@@ -72,19 +72,19 @@ export default function Question4() {
       {/* 두 번째 질문 */}
       {step >= 2 && (
         <div className="flex flex-col items-center text-center animate-fadeIn mb-20">
-          <p className="text-4xl text-white font-bold mb-6">
-            내년에 읽을 책 하나만 써보자! 내년에 꼭 읽어야해.
+          <p className="  text-white font-bold mb-6">
+            내년에 읽을 책 하나만 써보자! <br /> 내년에 꼭 읽어야해.
           </p>
           <input
             type="text"
             value={answer16}
             onChange={(e) => setAnswer16(e.target.value)}
-            className="text-center min-w-[400px] max-w-[800px] w-3/4 text-white p-2 border-b-2 border-white bg-transparent text-4xl focus:outline-none"
+            className="text-center min-w-2/3 max-w-[800px] w-3/4 text-white p-2 border-b-2 border-white bg-transparent   focus:outline-none"
           />
           {step === 2 && answer16.trim() && (
             <button
               onClick={handleNextStep}
-              className="text-xl text-white mt-4 hover:scale-150 transition-transform duration-300"
+              className="  text-white mt-4 hover:scale-150 transition-transform duration-300"
             >
               꼭 읽어야지!
             </button>
@@ -95,21 +95,22 @@ export default function Question4() {
       {/* 세 번째 질문 */}
       {step >= 3 && (
         <div className="flex flex-col items-center text-center animate-fadeIn mb-20">
-          <p className="text-4xl text-white font-bold mb-6">
-            올해의 영화 하나만! 딱 떠오르는 것, 아니면 너를 울렸던 것 ~
+          <p className="  text-white font-bold mb-6">
+            올해의 영화 하나만! 딱 떠오르는 것, <br />
+            아니면 너를 울렸던 것 ~
           </p>
           <input
             type="text"
             value={answer17}
             onChange={(e) => setAnswer17(e.target.value)}
-            className="text-center min-w-[400px] max-w-[800px] w-3/4 text-white p-2 border-b-2 border-white bg-transparent text-4xl focus:outline-none"
+            className="text-center min-w-2/3 max-w-[800px] w-3/4 text-white p-2 border-b-2 border-white bg-transparent   focus:outline-none"
           />
           {step === 3 && answer17.trim() && (
             <button
               onClick={handleNextStep}
-              className="text-xl text-white mt-4 hover:scale-150 transition-transform duration-300"
+              className="  text-white mt-4 hover:scale-150 transition-transform duration-300"
             >
-              감동적인 영화였겠어!
+              없다고 하지마
             </button>
           )}
         </div>
@@ -118,21 +119,21 @@ export default function Question4() {
       {/* 네 번째 질문 */}
       {step >= 4 && (
         <div className="flex flex-col items-center text-center animate-fadeIn mb-20">
-          <p className="text-4xl text-white font-bold mb-6">
+          <p className="  text-white font-bold mb-6">
             보고싶은 영화 있어? 아니면 기다리는 영화?
           </p>
           <input
             type="text"
             value={answer18}
             onChange={(e) => setAnswer18(e.target.value)}
-            className="text-center min-w-[400px] max-w-[800px] w-3/4 text-white p-2 border-b-2 border-white bg-transparent text-4xl focus:outline-none"
+            className="text-center min-w-2/3 max-w-[800px] w-3/4 text-white p-2 border-b-2 border-white bg-transparent   focus:outline-none"
           />
           {step === 4 && answer18.trim() && (
             <button
               onClick={handleNextPage}
-              className="text-xl text-white mt-4 hover:scale-150 transition-transform duration-300"
+              className="  text-white mt-4 hover:scale-150 transition-transform duration-300"
             >
-              영화가 기대된다!
+              가치볼래?우하하
             </button>
           )}
         </div>

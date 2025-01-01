@@ -81,21 +81,21 @@ export default function Question1() {
     >
       {/* 첫 번째 질문 */}
       <div className="text-center">
-        <p className="text-4xl text-white font-bold mb-6 animate-fadeIn">
+        <p className="text-white font-bold mb-6 animate-fadeIn">
           올해 2024년... 한 마디로 말하자면,
         </p>
         <textarea
           value={answer1}
           onChange={(e) => setAnswer1(e.target.value)}
-          className="text-center w-[600px] text-white p-2 border-b-2 border-white bg-transparent text-4xl focus:outline-none resize-none"
+          className="text-center w-2/3 text-white p-2 border-b-2 border-white bg-transparent   focus:outline-none resize-none"
           rows={1}
         />
         {answer1.trim() && step === 1 && (
           <button
             onClick={handleNextStep}
-            className="text-xl text-white hover:scale-150 transition-transform duration-300 mt-4"
+            className="  text-white hover:scale-150 transition-transform duration-300 mt-4"
           >
-            그랬던 한 해야.
+            여기서 말하는 올해는 2024년이야...^^
           </button>
         )}
       </div>
@@ -103,19 +103,19 @@ export default function Question1() {
       {/* 두 번째 질문 */}
       {step >= 2 && (
         <div className="text-center mt-10 animate-fadeIn">
-          <p className="text-4xl text-white font-bold mb-6">
+          <p className="text-white font-bold mb-6">
             이런 순간, 나는 행운이라고 느꼈어.
           </p>
           <textarea
             value={answer2}
             onChange={(e) => setAnswer2(e.target.value)}
-            className="text-center w-[600px] text-white p-2 border-b-2 border-white bg-transparent text-4xl focus:outline-none resize-none"
+            className="text-center w-2/3 text-white p-2 border-b-2 border-white bg-transparent   focus:outline-none resize-none"
             rows={1}
           />
           {answer2.trim() && step === 2 && (
             <button
               onClick={handleNextStep}
-              className="text-xl text-white hover:scale-150 transition-transform duration-300 mt-4"
+              className="  text-white hover:scale-150 transition-transform duration-300 mt-4"
             >
               그리고,
             </button>
@@ -129,7 +129,7 @@ export default function Question1() {
           ref={thirdQuestionRef}
           className="text-center mt-10 animate-fadeIn"
         >
-          <p className="text-4xl text-white font-bold mb-6">
+          <p className="text-white font-bold mb-6">
             올해 최고의 순간 TOP 3를 꼽자면...
           </p>
           <div className="flex flex-col gap-4">
@@ -138,7 +138,7 @@ export default function Question1() {
                 key={index}
                 value={answer}
                 onChange={(e) => handleAnswer3Change(index, e.target.value)}
-                className="text-center w-[600px] text-white p-2 border-b-2 border-white bg-transparent text-4xl focus:outline-none resize-none placeholder-white placeholder-opacity-50"
+                className="text-center w-2/3 text-white p-2 border-b-2 border-white bg-transparent   focus:outline-none resize-none placeholder-white placeholder-opacity-50"
                 rows={1}
                 placeholder={`${index + 1}위`}
               />
@@ -147,7 +147,7 @@ export default function Question1() {
             {answer3.every((ans) => ans.trim() !== "") && (
               <button
                 onClick={handleNextPage}
-                className="text-xl text-white hover:scale-150 transition-transform duration-300 mt-4"
+                className="  text-white hover:scale-150 transition-transform duration-300 mt-4"
               >
                 이런 순간들이 행복했어.
               </button>

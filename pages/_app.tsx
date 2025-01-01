@@ -1,10 +1,6 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
-import Script from "next/script";
 
-// firebase
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
 import ProgressLayout from "../src/components/common/layout/Layout";
 
 declare global {
@@ -13,19 +9,6 @@ declare global {
     Kakao: any;
   }
 }
-const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_KEY,
-  authDomain: "adieu-2022.firebaseapp.com",
-  projectId: "adieu-2022",
-  storageBucket: "adieu-2022.appspot.com",
-  messagingSenderId: "899892134820",
-  appId: "1:899892134820:web:affedc92d952225d7a7731",
-  measurementId: "G-SGFQZ8WSNM",
-};
-
-export const firebaseApp = initializeApp(firebaseConfig);
-
-// const analytics = getAnalytics(app);
 
 export default function App({ Component, pageProps }: AppProps) {
   const totalSteps = 7; // 전체 단계 수
@@ -40,10 +23,10 @@ export default function App({ Component, pageProps }: AppProps) {
       <ProgressLayout totalSteps={totalSteps}>
         <Component {...pageProps} />
       </ProgressLayout>
-      <Script
+      {/* <Script
         src="https://developers.kakao.com/sdk/js/kakao.js"
         onLoad={kakaoInit}
-      />
+      /> */}
     </>
   );
 }

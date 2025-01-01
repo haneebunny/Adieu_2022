@@ -62,19 +62,20 @@ export default function Question3() {
     >
       {/* 첫 번째 질문 */}
       <div className="flex flex-col items-center text-center animate-fadeIn mb-20">
-        <p className="text-4xl text-white font-bold mb-6">
-          가장 많이 들었던 노래는 뭐야? (YouTube Music Recap 등 활용해봐!)
+        <p className="  text-white font-bold mb-6">
+          가장 많이 들었던 노래는 뭐야? <br /> (YouTube Music Recap 등
+          활용해봐!)
         </p>
         <input
           type="text"
           value={answer10}
           onChange={(e) => setAnswer10(e.target.value)}
-          className="text-center min-w-[400px] max-w-[800px] w-3/4 text-white p-2 border-b-2 border-white bg-transparent text-4xl focus:outline-none"
+          className="text-center min-w-2/3 max-w-[800px] w-3/4 text-white p-2 border-b-2 border-white bg-transparent   focus:outline-none"
         />
         {step === 1 && answer10.trim() && (
           <button
             onClick={handleNextStep}
-            className="text-xl text-white mt-4 hover:scale-150 transition-transform duration-300"
+            className="  text-white mt-4 hover:scale-150 transition-transform duration-300"
           >
             어떤 가수의 노래를 제일 많이 들었을까?
           </button>
@@ -84,7 +85,7 @@ export default function Question3() {
       {/* 두 번째 질문 */}
       {step >= 2 && (
         <div className="flex flex-col items-center text-center animate-fadeIn mb-20">
-          <p className="text-4xl text-white font-bold mb-6">
+          <p className="  text-white font-bold mb-6">
             올해의 노래 TOP 3만 꼽자면?
           </p>
           <div className="flex flex-col gap-4">
@@ -94,7 +95,7 @@ export default function Question3() {
                 type="text"
                 value={answer}
                 onChange={(e) => handleAnswer11Change(index, e.target.value)}
-                className="text-center min-w-[400px] max-w-[800px] w-3/4 text-white p-2 border-b-2 border-white bg-transparent text-4xl focus:outline-none placeholder-white placeholder-opacity-50"
+                className="text-center min-w-2/3 max-w-[800px] w-3/4 text-white p-2 border-b-2 border-white bg-transparent   focus:outline-none placeholder-white placeholder-opacity-50"
                 placeholder={`${index + 1}위`}
               />
             ))}
@@ -102,7 +103,7 @@ export default function Question3() {
           {step === 2 && answer11.every((ans) => ans.trim() !== "") && (
             <button
               onClick={handleNextStep}
-              className="text-xl text-white mt-4 hover:scale-150 transition-transform duration-300"
+              className="  text-white mt-4 hover:scale-150 transition-transform duration-300"
             >
               흠 이 세 개에서 어떤 향이 나는 것 같아?
             </button>
@@ -113,19 +114,19 @@ export default function Question3() {
       {/* 세 번째 질문 */}
       {step >= 3 && (
         <div className="flex flex-col items-center text-center animate-fadeIn mb-20">
-          <p className="text-4xl text-white font-bold mb-6">
+          <p className="  text-white font-bold mb-6">
             가장 좋았던 영상은? (아예 링크를 써줘도 좋아!)
           </p>
           <input
             type="text"
             value={answer12}
             onChange={(e) => setAnswer12(e.target.value)}
-            className="text-center min-w-[400px] max-w-[800px] w-3/4 text-white p-2 border-b-2 border-white bg-transparent text-4xl focus:outline-none"
+            className="text-center min-w-2/3 max-w-[800px] w-3/4 text-white p-2 border-b-2 border-white bg-transparent   focus:outline-none"
           />
           {step === 3 && answer12.trim() && (
             <button
               onClick={handleNextStep}
-              className="text-xl text-white mt-4 hover:scale-150 transition-transform duration-300"
+              className="  text-white mt-4 hover:scale-150 transition-transform duration-300"
             >
               어떤 사람한텐 youtube 기록이 완전 비밀이기도 하대
             </button>
@@ -136,19 +137,19 @@ export default function Question3() {
       {/* 네 번째 질문 */}
       {step >= 4 && (
         <div className="flex flex-col items-center text-center animate-fadeIn mb-20">
-          <p className="text-4xl text-white font-bold mb-6">
+          <p className="  text-white font-bold mb-6">
             가장 큰 영향을 미친 영상이 있어?
           </p>
           <input
             type="text"
             value={answer13}
             onChange={(e) => setAnswer13(e.target.value)}
-            className="text-center min-w-[400px] max-w-[800px] w-3/4 text-white p-2 border-b-2 border-white bg-transparent text-4xl focus:outline-none"
+            className="text-center min-w-2/3 max-w-[800px] w-3/4 text-white p-2 border-b-2 border-white bg-transparent   focus:outline-none"
           />
           {step === 4 && answer13.trim() && (
             <button
               onClick={handleNextStep}
-              className="text-xl text-white mt-4 hover:scale-150 transition-transform duration-300"
+              className="  text-white mt-4 hover:scale-150 transition-transform duration-300"
             >
               없을 수도 있지...
             </button>
@@ -159,21 +160,19 @@ export default function Question3() {
       {/* 다섯 번째 질문 */}
       {step >= 5 && (
         <div className="flex flex-col items-center text-center animate-fadeIn mb-20">
-          <p className="text-4xl text-white font-bold mb-6">
-            내년에 들을 첫 곡
-          </p>
+          <p className="  text-white font-bold mb-6">내년에 들을 첫 곡</p>
           <input
             type="text"
             value={answer14}
             onChange={(e) => setAnswer14(e.target.value)}
-            className="text-center min-w-[400px] max-w-[800px] w-3/4 text-white p-2 border-b-2 border-white bg-transparent text-4xl focus:outline-none"
+            className="text-center min-w-2/3 max-w-[800px] w-3/4 text-white p-2 border-b-2 border-white bg-transparent   focus:outline-none"
           />
           {step === 5 && answer14.trim() && (
             <button
               onClick={handleNextPage}
-              className="text-xl text-white mt-4 hover:scale-150 transition-transform duration-300"
+              className="  text-white mt-4 hover:scale-150 transition-transform duration-300"
             >
-              가취 들어요~~~
+              가취 들어요~~~ <br /> 코딩을 미루다가 2025년이 와버렸어;;
             </button>
           )}
         </div>

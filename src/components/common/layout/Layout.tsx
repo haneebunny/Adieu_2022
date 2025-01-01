@@ -20,26 +20,24 @@ const ProgressLayout: React.FC<ProgressLayoutProps> = ({
       : parseInt(router.pathname.split("/")[2], 10) + 1; // 나머지는 +1
 
   return (
-    <div className="w-full min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col w-full bg-gray-900 text-white">
       {/* 단계 표시 헤더 */}
-      <header className="fixed w-full backdrop-blur text-white py-2 md:py-4">
-        <div className="w-full flex items-center justify-between px-4 md:px-6">
-          <h1 className="text-sm md:text-lg font-bold whitespace-nowrap">
+      <header className="fixed w-full backdrop-blur bg-opacity-80 py-2 md:py-4">
+        <div className="flex items-center justify-between px-4 md:px-6">
+          <h1 className="text-xs sm:text-sm md:text-lg font-bold whitespace-nowrap">
             ☀️🌙 과 함께하는 시간
           </h1>
-          <Link href="/" className="text-xs md:text-sm whitespace-nowrap">
-            홈으로
-          </Link>
+
           <div className="flex gap-1 md:gap-2">
             {[...Array(totalSteps)].map((_, index) => (
               <Link
                 href={index === 0 ? `/river` : `/river/${index}`}
                 key={index}
-                className={`w-6 h-6 md:w-8 md:h-8 flex items-center justify-center rounded-full text-xs md:text-sm ${
+                className={`w-5 h-5 sm:w-4 sm:h-4 md:w-8 md:h-8 flex items-center justify-center rounded-full text-xs sm:text-sm ${
                   index + 1 < currentStep
                     ? "bg-green-400"
                     : index + 1 === currentStep
-                    ? "bg-yellow-400"
+                    ? " bg-"
                     : "bg-gray-300"
                 }`}
               >
@@ -51,9 +49,7 @@ const ProgressLayout: React.FC<ProgressLayoutProps> = ({
       </header>
 
       {/* 페이지 콘텐츠 */}
-      <main className="w-full items-center justify-center max-w-none bg-cover bg-center">
-        {children}
-      </main>
+      <main className="">{children}</main>
     </div>
   );
 };

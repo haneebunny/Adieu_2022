@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React, { useState, useEffect } from "react";
 
 export default function Question6() {
@@ -66,8 +67,9 @@ export default function Question6() {
   ) => {
     if (e.target.files) {
       const files = Array.from(e.target.files);
-      setAnswer25(files);
-      setPreview25(files.map((file) => URL.createObjectURL(file))); // 각 파일의 미리보기 URL 생성
+      const validFiles = files.slice(0, 10); // 최대 10개까지만 허용
+      setAnswer25(validFiles);
+      setPreview25(validFiles.map((file) => URL.createObjectURL(file))); // 각 파일의 미리보기 URL 생성
     }
   };
 
@@ -90,32 +92,30 @@ export default function Question6() {
 
     setIsUploading(false);
     setStep(2); // 다음 단계로 이동
-    alert("사진 업로드 완료!");
+    alert("사진 업로드 완료!(아마도)");
   };
 
   return (
     <div
-      className="flex flex-col justify-center items-center"
+      className="min-h-screen flex flex-col justify-start items-center bg-cover bg-center bg-fixed pt-20"
       style={{
         backgroundImage: 'url("/img/river_6.png")',
-        backgroundSize: "cover", // 배경을 콘텐츠 크기에 맞게 확장
-        backgroundRepeat: "no-repeat", // 반복 방지
-        backgroundAttachment: "fixed", // 고정 배경
-        minHeight: "100vh", // 콘텐츠가 많아도 최소 높이 화면 전체
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
       }}
     >
       {step === 1 && (
-        <div className="w-full flex flex-col items-center text-center">
-          <h1 className="text-4xl font-bold text-white mb-6">
-            올해를 대표하는 사진 한 장
+        <div className="flex flex-col items-center text-center animate-fadeIn mb-20">
+          <h1 className="font-bold text-white mb-6">
+            올해의 대표 사진을 정하자면? <br /> ㅎㅎ...2024년 얘기하는 거 알지?
           </h1>
           <input
             type="file"
             accept="image/*"
             onChange={handleRepresentativePhotoChange}
-            className="mb-4 text-white"
+            className="w-2/3 mb-4 text-white"
           />
-          {answer24 !== null && answer25.length === 0 && (
+          {answer24 && (
             <div>
               <div className="mb-6 flex flex-col justify-center items-center">
                 <p className="text-white">✨{userName}의 2024년✨</p>
@@ -127,29 +127,30 @@ export default function Question6() {
                 <p className="text-white">↑당신 멋져↑</p>
               </div>
 
-              <h2 className="text-2xl font-bold text-white">
-                올해의 사진 10장 뽑아줘!
-              </h2>
+              <h2 className="font-bold text-white">올해의 사진 10장 뽑아줘!</h2>
               <p className="text-white mb-6">
-                앨범에서 즐겨찾기한 사진을 참고해봐~
+                앨범에서 즐겨찾기한 사진을 참고해조... ❤︎ <br />난 너무 많아서
+                고르기 힘들어
               </p>
               <input
                 type="file"
                 accept="image/*"
                 multiple
                 onChange={handlePhotoCollectionChange}
-                className="mb-4 text-white"
+                className="w-2/3 mb-4 text-white"
               />
               {preview25.length > 0 && (
-                <div className="grid grid-cols-3 gap-4 mb-6">
-                  {preview25.map((src, index) => (
-                    <img
-                      key={index}
-                      src={src}
-                      alt={`사진 ${index + 1} 미리보기`}
-                      className="w-32 h-32 object-cover rounded-lg"
-                    />
-                  ))}
+                <div className="flex justify-center">
+                  <div className="w-3/4 grid grid-cols-3 gap-4 mb-6">
+                    {preview25.map((src, index) => (
+                      <img
+                        key={index}
+                        src={src}
+                        alt={`사진 ${index + 1} 미리보기`}
+                        className="w-32 h-32 object-cover rounded-lg"
+                      />
+                    ))}
+                  </div>
                 </div>
               )}
             </div>
@@ -158,10 +159,10 @@ export default function Question6() {
           {answer24 && answer25.length === 10 && (
             <button
               onClick={handleUpload}
-              className="bg-blue-500 text-white py-2 px-6 rounded-lg hover:bg-blue-600"
+              className="bg-customGreen text-white py-2 px-6 rounded-lg hover:bg-customDGreen"
               disabled={isUploading}
             >
-              {isUploading ? "업로드 중..." : "사진 업로드"}
+              {isUploading ? "업로드 중...(기다려줘요)" : "업로드 하기"}
             </button>
           )}
         </div>
@@ -169,9 +170,9 @@ export default function Question6() {
 
       {step === 2 && (
         <div className="flex flex-col items-center text-center">
-          <h1 className="text-4xl font-bold text-white mb-6">
-            다음 질문으로 넘어갈 준비가 되었어요!
-          </h1>
+          <Link href="/river/end">
+            <h1 className="font-bold text-white mb-6">눌러줘!</h1>
+          </Link>
         </div>
       )}
     </div>

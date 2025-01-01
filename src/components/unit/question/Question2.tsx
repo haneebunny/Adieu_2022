@@ -66,19 +66,21 @@ export default function Question2() {
     >
       {/* 첫 번째 질문 */}
       <div className="flex flex-col items-center text-center animate-fadeIn mb-20">
-        <p className="text-4xl text-white font-bold mb-6">
-          가장 자주 연락한 사람은 누구였을까? 통화 목록을 살펴보자.
+        <p className="  text-white font-bold mb-6">
+          가장 자주 연락한 사람은 누구였을까?
+          <br />
+          통화 목록을 살펴보자.
         </p>
         <input
           type="text"
           value={answer4}
           onChange={(e) => setAnswer4(e.target.value)}
-          className="text-center w-[400px] text-white p-2 border-b-2 border-white bg-transparent text-4xl focus:outline-none"
+          className="text-center w-2/3 text-white p-2 border-b-2 border-white bg-transparent   focus:outline-none"
         />
         {step === 1 && answer4.trim() && (
           <button
             onClick={handleNextStep}
-            className="text-xl text-white mt-4 hover:scale-150 transition-transform duration-300"
+            className=" text-white mt-4 hover:scale-150 transition-transform duration-300"
           >
             이렇게 연락을 많이 했다니!
           </button>
@@ -88,19 +90,19 @@ export default function Question2() {
       {/* 두 번째 질문 */}
       {step >= 2 && (
         <div className="flex flex-col items-center text-center animate-fadeIn mb-20">
-          <p className="text-4xl text-white font-bold mb-6">
+          <p className="  text-white font-bold mb-6">
             나에게 가장 큰 영향을 준 사람은?
           </p>
           <input
             type="text"
             value={answer5}
             onChange={(e) => setAnswer5(e.target.value)}
-            className="text-center w-[400px] text-white p-2 border-b-2 border-white bg-transparent text-4xl focus:outline-none"
+            className="text-center w-2/3 text-white p-2 border-b-2 border-white bg-transparent   focus:outline-none"
           />
           {step === 2 && answer5.trim() && (
             <button
               onClick={handleNextStep}
-              className="text-xl text-white mt-4 hover:scale-150 transition-transform duration-300"
+              className="  text-white mt-4 hover:scale-150 transition-transform duration-300"
             >
               어떤 영향을 받았는데?
             </button>
@@ -111,19 +113,19 @@ export default function Question2() {
       {/* 세 번째 질문 */}
       {step >= 3 && (
         <div className="flex flex-col items-center text-center animate-fadeIn mb-20">
-          <p className="text-4xl text-white font-bold mb-6">
+          <p className="  text-white font-bold mb-6">
             올해 새로 친해진 사람이 있어, 그건 ...
           </p>
           <input
             type="text"
             value={answer6}
             onChange={(e) => setAnswer6(e.target.value)}
-            className="text-center w-[400px] text-white p-2 border-b-2 border-white bg-transparent text-4xl focus:outline-none"
+            className="text-center w-2/3 text-white p-2 border-b-2 border-white bg-transparent   focus:outline-none"
           />
           {step === 3 && answer6.trim() && (
             <button
               onClick={handleNextStep}
-              className="text-xl text-white mt-4 hover:scale-150 transition-transform duration-300"
+              className="  text-white mt-4 hover:scale-150 transition-transform duration-300"
             >
               올해도 누군가를 얻었지!
             </button>
@@ -133,19 +135,19 @@ export default function Question2() {
       {/* 네 번째 질문 */}
       {step >= 4 && (
         <div className="flex flex-col items-center text-center animate-fadeIn mb-20">
-          <p className="text-4xl text-white font-bold mb-6">
+          <p className="  text-white font-bold mb-6">
             나에게 생각지도 못한 관심을 준 사람은,
           </p>
           <input
             type="text"
             value={answer7}
             onChange={(e) => setAnswer7(e.target.value)}
-            className="text-center w-[400px] text-white p-2 border-b-2 border-white bg-transparent text-4xl focus:outline-none"
+            className="text-center w-2/3 text-white p-2 border-b-2 border-white bg-transparent   focus:outline-none"
           />
           {step === 4 && answer7.trim() && (
             <button
               onClick={handleNextStep}
-              className="text-xl text-white mt-4 hover:scale-150 transition-transform duration-300"
+              className="  text-white mt-4 hover:scale-150 transition-transform duration-300"
             >
               고마운 사람이여!
             </button>
@@ -156,19 +158,20 @@ export default function Question2() {
       {/* 다섯 번째 질문 */}
       {step >= 5 && (
         <div className="flex flex-col items-center text-center animate-fadeIn mb-20">
-          <p className="text-4xl text-white font-bold mb-6">
-            연락하고 싶은데 못 한 사람, 아쉬움이 남는 사람이 있다면 이 사람이야.
+          <p className="  text-white font-bold mb-6">
+            연락하고 싶은데 못 한 사람, <br />
+            아쉬움이 남는 사람이 있다면 이 사람이야.
           </p>
           <input
             type="text"
             value={answer8}
             onChange={(e) => setAnswer8(e.target.value)}
-            className="text-center w-[400px] text-white p-2 border-b-2 border-white bg-transparent text-4xl focus:outline-none"
+            className="text-center w-2/3 text-white p-2 border-b-2 border-white bg-transparent   focus:outline-none"
           />
           {step === 5 && answer8.trim() && (
             <button
               onClick={handleNextStep}
-              className="text-xl text-white mt-4 hover:scale-150 transition-transform duration-300"
+              className="  text-white mt-4 hover:scale-150 transition-transform duration-300"
             >
               왜 아쉬움이 남아?
             </button>
@@ -179,9 +182,7 @@ export default function Question2() {
       {/* 여섯 번째 질문 */}
       {step >= 6 && (
         <div className="flex flex-col items-center text-center animate-fadeIn mb-20">
-          <p className="text-4xl text-white font-bold mb-6">
-            고마운 사람 TOP 5
-          </p>
+          <p className="  text-white font-bold mb-6">고마운 사람 TOP 5</p>
           <div className="flex flex-col gap-4">
             {answer9.map((answer, index) => (
               <input
@@ -189,16 +190,16 @@ export default function Question2() {
                 type="text"
                 value={answer}
                 onChange={(e) => handleAnswer9Change(index, e.target.value)}
-                className="text-center w-[400px] text-white p-2 border-b-2 border-white bg-transparent text-4xl focus:outline-none placeholder-white placeholder-opacity-50"
+                className="text-center w-2/3 text-white p-2 border-b-2 border-white bg-transparent   focus:outline-none placeholder-white placeholder-opacity-50"
                 placeholder={`${index + 1}위`}
               />
             ))}
             {answer9.every((ans) => ans.trim() !== "") && (
               <button
                 onClick={handleNextPage}
-                className="text-xl text-white mt-4 hover:scale-150 transition-transform duration-300"
+                className="  text-white mt-4 hover:scale-150 transition-transform duration-300"
               >
-                다음 페이지로 이동
+                나도 있어?!
               </button>
             )}
           </div>
