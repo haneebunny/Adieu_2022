@@ -35,10 +35,10 @@ const ProgressLayout: React.FC<ProgressLayoutProps> = ({
                 key={index}
                 className={`w-5 h-5 sm:w-4 sm:h-4 md:w-8 md:h-8 flex items-center justify-center rounded-full text-xs sm:text-sm ${
                   index + 1 < currentStep
-                    ? "bg-green-400"
+                    ? "bg-customGreen"
                     : index + 1 === currentStep
-                    ? " bg-"
-                    : "bg-gray-300"
+                    ? "bg-customDGreen"
+                    : "bg-gray-400"
                 }`}
               >
                 {index + 1}
