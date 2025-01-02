@@ -190,7 +190,7 @@ export default function Question2() {
                 type="text"
                 value={answer}
                 onChange={(e) => handleAnswer9Change(index, e.target.value)}
-                className="text-center w-2/3 text-white p-2 border-b-2 border-white bg-transparent   focus:outline-none placeholder-white placeholder-opacity-50"
+                className="text-center text-white p-2 border-b-2 border-white bg-transparent   focus:outline-none placeholder-white placeholder-opacity-50"
                 placeholder={`${index + 1}위`}
               />
             ))}

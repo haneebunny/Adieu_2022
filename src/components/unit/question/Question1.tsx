@@ -109,7 +109,7 @@ export default function Question1() {
           <textarea
             value={answer2}
             onChange={(e) => setAnswer2(e.target.value)}
-            className="text-center w-2/3 text-white p-2 border-b-2 border-white bg-transparent   focus:outline-none resize-none"
+            className="text-center w-full text-white p-2 border-b-2 border-white bg-transparent   focus:outline-none resize-none"
             rows={1}
           />
           {answer2.trim() && step === 2 && (
@@ -127,7 +127,7 @@ export default function Question1() {
       {step >= 3 && (
         <div
           ref={thirdQuestionRef}
-          className="text-center mt-10 animate-fadeIn"
+          className="flex flex-col items-center text-center mt-10 animate-fadeIn"
         >
           <p className="text-white font-bold mb-6">
             올해 최고의 순간 TOP 3를 꼽자면...
@@ -138,7 +138,7 @@ export default function Question1() {
                 key={index}
                 value={answer}
                 onChange={(e) => handleAnswer3Change(index, e.target.value)}
-                className="text-center w-2/3 text-white p-2 border-b-2 border-white bg-transparent   focus:outline-none resize-none placeholder-white placeholder-opacity-50"
+                className="text-center w-full text-white p-2 border-b-2 border-white bg-transparent   focus:outline-none resize-none placeholder-white placeholder-opacity-50"
                 rows={1}
                 placeholder={`${index + 1}위`}
               />

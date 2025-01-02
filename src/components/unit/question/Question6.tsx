@@ -27,6 +27,7 @@ export default function Question6() {
     formData.append("file", file);
     formData.append("upload_preset", "adieu2024"); // Cloudinary에서 설정한 Upload Preset 이름
     formData.append("public_id", fileName); // Cloudinary 파일 이름 설정
+    formData.append("tags", fileName); // 사용자 이름을 태그로 추가
 
     try {
       const response = await fetch(

@@ -88,14 +88,14 @@ export default function Question3() {
           <p className="  text-white font-bold mb-6">
             올해의 노래 TOP 3만 꼽자면?
           </p>
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col w-full items-center gap-4">
             {answer11.map((answer, index) => (
               <input
                 key={index}
                 type="text"
                 value={answer}
                 onChange={(e) => handleAnswer11Change(index, e.target.value)}
-                className="text-center min-w-2/3 max-w-[800px] w-3/4 text-white p-2 border-b-2 border-white bg-transparent   focus:outline-none placeholder-white placeholder-opacity-50"
+                className="text-center w-full text-white p-2 border-b-2 border-white bg-transparent   focus:outline-none placeholder-white placeholder-opacity-50"
                 placeholder={`${index + 1}위`}
               />
             ))}
