@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../../../firebase";
+import axios from "axios";
 
 interface AnswerData {
   name: string;
@@ -13,14 +14,53 @@ export default function EndingPage() {
   const { name } = router.query;
 
   const [data, setData] = useState<AnswerData | null>(null);
-  const [imageUrls, setImageUrls] = useState<string[]>([]);
+  const [images, setImages] = useState<string[]>([]);
 
   useEffect(() => {
     if (name) {
       fetchFirebaseData(String(name));
-      fetchImages(String(name));
+      // fetchImages(String(name));
     }
   }, [name]);
+
+  useEffect(() => {
+    const fetchImages = async () => {
+      if (!name) return;
+      try {
+        const response = await axios.post("/api/cloudinary", { name });
+        const imageUrls = response.data.map((img: any) => img.url);
+        setImages(imageUrls);
+      } catch (error) {
+        console.error("Error fetching images:", error);
+      }
+    };
+
+    console.log("image::", images);
+    fetchImages();
+  }, [name]);
+
+  // 데이터 정규화 함수
+  const normalizeData = (data: Record<string, any>): AnswerData => {
+    const normalized: AnswerData = { name: "" }; // 기본 구조
+
+    for (const key in data) {
+      if (
+        typeof data[key] === "string" &&
+        data[key].startsWith("[") &&
+        data[key].endsWith("]")
+      ) {
+        try {
+          normalized[key] = JSON.parse(data[key]) as string[]; // JSON 배열로 변환
+        } catch {
+          normalized[key] = data[key]; // 변환 실패 시 문자열 그대로
+        }
+      } else {
+        normalized[key] = data[key];
+      }
+    }
+
+    return normalized;
+  };
 
   const fetchFirebaseData = async (userName: string) => {
     try {
@@ -31,7 +71,8 @@ export default function EndingPage() {
       const querySnapshot = await getDocs(q);
       if (!querySnapshot.empty) {
         const docData = querySnapshot.docs[0].data();
-        setData(docData as AnswerData);
+        setData(normalizeData(docData));
+        console.log(data);
       } else {
         alert("Firebase 데이터가 없습니다.");
       }
@@ -41,22 +82,21 @@ export default function EndingPage() {
     }
   };
 
-  const fetchImages = (userName: string) => {
-    const urls = [];
-    for (let i = 1; i <= 10; i++) {
-      urls.push(`/img/${userName}/${userName}_answer24_${i}.png`);
-    }
-    setImageUrls(urls);
-  };
+  // const fetchImages = (userName: string) => {
+  //   const urls = [];
+  //   for (let i = 1; i <= 10; i++) {
+  //     urls.push(`/img/${userName}/${userName}_answer24_${i}.png`);
+  //   }
+  // };
 
   const getDisplayText = (text: any) => {
     if (typeof text === "string") {
-      return text.trim() && text.length > 1 ? text : "이건 없었어.";
+      return text.trim() && text.length > 1 ? <p>{text}</p> : "이건 없었어.";
     }
     if (Array.isArray(text)) {
       return text.map((t, index) =>
         t.trim() && t.length > 1 ? (
-          <p key={index}>{`${index + 1}위: ${t}`}</p>
+          <p key={index}>{`⭐️${index + 1}위⭐️ ${t}`}</p>
         ) : (
           <p key={index}>이건 없었어.</p>
         )
@@ -74,29 +114,29 @@ export default function EndingPage() {
   }
 
   const questions = [
-    "올해는 한 마디로",
-    "이런 순간, 나는 행운이라고 느꼈어.",
-    "올해 최고의 순간 Top 3를 꼽자면...",
-    "가장 자주 연락한 사람은 누구였을까? 통화 목록을 살펴보자.",
-    "나에게 가장 큰 영향을 준 사람은?",
-    "올해 새로 친해진 사람이 있어, 그건 ...",
-    "나에게 생각지도 못한 관심을 준 사람은,",
-    "연락하고 싶었지만 못 한 사람, 아쉬움이 남는 사람이 있다면 이 사람이야.",
-    "고마운 사람 Top 5",
-    "올해의 소울푸드 소개 좀 시켜줘",
-    "칭찬받았던 좋은 이야기는",
-    "올해의 취미는 뭐였어?",
-    "새로 생긴 취미가 있어?",
-    "내년에 도전하고 싶은 건",
-    "가장 많이 들었던 노래는?",
-    "올해의 노래 Top 3만 꼽자면?",
-    "가장 좋았던 영상은? (아예 링크를 써줘도 좋아!)",
-    "가장 큰 영향을 미친 영상이 있나?",
-    "내년에 들을 첫 곡",
-    "올해 읽었던 책 중 가장 기억에 남는 책은?",
-    "내년에 읽을 책 하나만 써보자!",
-    "올해의 영화 하나만!",
-    "보고싶은 영화 있어?",
+    "올해는 한 마디로,",
+    `${name}의  🍀`,
+    `${name} 2024 최고의 순간`,
+    "가장 자주 연락한 사람은... 두구두구~! 바로바로!",
+    `${name}에게 가장 큰 영향을 준 사람은 `,
+    "2024년에도 누군가를 알게 되었어.",
+    "생각지도 못한 관심을 준 사람,",
+    "연락해볼까?♤",
+    "† 대박적 고마운 사람 Top 5 †",
+    `${name} 2024년의 노래 🎵`,
+    "2024년의 노래들을 소개합니다 ^^",
+    "2024년의 동영상🥸",
+    "영향을 미친 영상은 🥴",
+    "2025년에 처음으로 듣고 싶던 노래, 들었어?",
+    "📖2024 대표 책📖",
+    "2025년에 이 책을 꼭 읽도록!",
+    "2024, 나를 감동시킨 영화",
+    "2025년에 보고 싶은 영화는,",
+    "SOUL FOOD of 2024 is ",
+    "조금이라도 행복에 기여한 말😗",
+    "🎀취미로는 이런 걸 했지,🎀",
+    "새로운 취미도 생겼어!!",
+    "what will you do for fun in 2025?",
     "올해의 대표 사진",
     "올해의 사진 10장만 뽑아서 보여줘!",
   ];
@@ -110,20 +150,18 @@ export default function EndingPage() {
     >
       <div className="text-center mt-10">
         {questions.map((question, index) => (
-          <p key={index} className="mb-10 leading-relaxed">
-            {question}: {getDisplayText(data[`answer${index + 1}`])}
+          <p key={index} className="p-16 leading-relaxed">
+            {question} {getDisplayText(data[`answer${index + 1}`])}
           </p>
         ))}
       </div>
-
-      {/* 이미지 갤러리 */}
-      <div className="mt-20 grid grid-cols-2 gap-4">
-        {imageUrls.map((url, index) => (
+      <div className="grid grid-cols-3 gap-4">
+        {images.map((url, index) => (
           <img
             key={index}
             src={url}
-            alt={`추가 이미지 ${index + 1}`}
-            className="w-64 h-64 object-cover rounded-lg"
+            alt={`Image ${index + 1}`}
+            className="w-32 h-32 object-cover"
           />
         ))}
       </div>
