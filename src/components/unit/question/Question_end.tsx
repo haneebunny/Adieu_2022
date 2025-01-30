@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "../../../../firebase";
 
 export default function QuestionEnd() {
@@ -37,6 +37,7 @@ export default function QuestionEnd() {
         answer23: localStorage.getItem("answer23"),
         answer24: parseJSON(localStorage.getItem("answer24")),
         answer25: parseJSON(localStorage.getItem("answer25")),
+        createAt: serverTimestamp(),
       };
 
       console.log("Uploading all answers:", allAnswers);
@@ -47,8 +48,8 @@ export default function QuestionEnd() {
       console.log("Document written with ID:", docRef.id);
       alert("잘 보낸 것 같아요, 아마도!");
 
-      // 저장 후 로컬 스토리지 초기화 (선택 사항)
-      localStorage.clear();
+      // // 저장 후 로컬 스토리지 초기화 (선택 사항)
+      // localStorage.clear();
     } catch (error) {
       console.error("Error uploading data to Firebase:", error);
       alert("오류가 발생하면 난 어떡하지...");
