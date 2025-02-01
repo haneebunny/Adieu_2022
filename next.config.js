@@ -16,7 +16,6 @@ module.exports = {
     emotion: true,
   },
   env: {
-    output: "export",
     basePath: "/Adieu_2022", // GitHub Pages에서 사용하는 경로
     assetPrefix: "/Adieu_2022", // 정적 자산 경로
   },
