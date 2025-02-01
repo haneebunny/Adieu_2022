@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../../../firebase";
 import axios from "axios";
+import { GetServerSideProps } from "next";
 
 // styles
 import * as S from "./Ending.styles";
@@ -12,10 +13,7 @@ interface AnswerData {
   [key: string]: any; // 모든 답변 데이터
 }
 
-export default function EndingPage() {
-  const router = useRouter();
-  const { name } = router.query;
-
+export default function EndingPage({ name }: { name: string }) {
   const [data, setData] = useState<AnswerData | null>(null);
   const [images, setImages] = useState<string[]>([]);
   const [videoId, setVideoId] = useState<string | null>(null);
@@ -24,47 +22,20 @@ export default function EndingPage() {
   useEffect(() => {
     if (name) {
       fetchFirebaseData(String(name));
-      // fetchImages(String(name));
+      fetchImages();
     }
   }, [name]);
 
-  useEffect(() => {
-    const fetchImages = async () => {
-      if (!name) return;
-      try {
-        const response = await axios.post("/api/cloudinary", { name });
-        const imageUrls = response.data.map((img: any) => img.url);
-        setImages(imageUrls);
-      } catch (error) {
-        console.error("Error fetching images:", error);
-      }
-    };
-
-    console.log("image::", images);
-    fetchImages();
-  }, [name]);
-
-  useEffect(() => {
-    const fetchYouTubeVideo = async () => {
-      if (!data?.answer10) return;
-      try {
-        const apiKey = "AIzaSyCwmlYLtWaTvaFMAsDsNia6PioZanwZpxU"; // 🔥 여기에 YouTube API 키 입력
-        const response = await axios.get(
-          `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(
-            data?.answer10
-          )}&type=video&key=${apiKey}`
-        );
-        console.log("response:", response);
-        if (response.data.items.length > 0) {
-          setVideoId(response.data.items[0].id.videoId);
-        }
-      } catch (error) {
-        console.error("YouTube 검색 중 오류 발생:", error);
-      }
-    };
-
-    fetchYouTubeVideo();
-  }, [data]);
+  const fetchImages = async () => {
+    if (!name) return;
+    try {
+      const response = await axios.post("/api/cloudinary", { name });
+      const imageUrls = response.data.map((img: any) => img.url);
+      setImages(imageUrls);
+    } catch (error) {
+      console.error("Error fetching images:", error);
+    }
+  };
 
   // mute 토글
   const toggleMute = () => setIsMuted(!isMuted);
@@ -92,6 +63,24 @@ export default function EndingPage() {
     return normalized;
   };
 
+  const fetchYouTubeVideo = async () => {
+    if (!data?.answer10) return;
+    try {
+      const apiKey = "AIzaSyCwmlYLtWaTvaFMAsDsNia6PioZanwZpxU"; // 🔥 여기에 YouTube API 키 입력
+      const response = await axios.get(
+        `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(
+          data?.answer10
+        )}&type=video&key=${apiKey}`
+      );
+      console.log("response:", response);
+      if (response.data.items.length > 0) {
+        setVideoId(response.data.items[0].id.videoId);
+      }
+    } catch (error) {
+      console.error("YouTube 검색 중 오류 발생:", error);
+    }
+  };
+
   const fetchFirebaseData = async (userName: string) => {
     try {
       const q = query(
@@ -103,6 +92,7 @@ export default function EndingPage() {
         const docData = querySnapshot.docs[0].data();
         setData(normalizeData(docData));
         console.log("받은 데이터::", data);
+        if (data?.answer10) fetchYouTubeVideo();
       } else {
         alert("Firebase 데이터가 없습니다.");
       }
