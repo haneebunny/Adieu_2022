@@ -22,31 +22,33 @@ const ProgressLayout: React.FC<ProgressLayoutProps> = ({
   return (
     <div className="min-h-screen flex flex-col w-full bg-gray-900 text-white">
       {/* 단계 표시 헤더 */}
-      <header className="fixed w-full backdrop-blur bg-opacity-80 py-2 md:py-4">
-        <div className="flex items-center justify-between px-4 md:px-6">
-          <h1 className="text-xs sm:text-sm md:text-lg font-bold whitespace-nowrap">
-            ☀️🌙 과 함께하는 시간
-          </h1>
+      {!router.pathname.includes("ending_credit") && (
+        <header className="fixed w-full backdrop-blur bg-opacity-80 py-2 md:py-4">
+          <div className="flex items-center justify-between px-4 md:px-6">
+            <h1 className="text-xs sm:text-sm md:text-lg font-bold whitespace-nowrap">
+              ☀️🌙 과 함께하는 시간
+            </h1>
 
-          <div className="flex gap-1 md:gap-2">
-            {[...Array(totalSteps)].map((_, index) => (
-              <Link
-                href={index === 0 ? `/river` : `/river/${index}`}
-                key={index}
-                className={`w-5 h-5 sm:w-4 sm:h-4 md:w-8 md:h-8 flex items-center justify-center rounded-full text-xs sm:text-sm ${
-                  index + 1 < currentStep
-                    ? "bg-customGreen"
-                    : index + 1 === currentStep
-                    ? "bg-customDGreen"
-                    : "bg-gray-400"
-                }`}
-              >
-                {index + 1}
-              </Link>
-            ))}
+            <div className="flex gap-1 md:gap-2">
+              {[...Array(totalSteps)].map((_, index) => (
+                <Link
+                  href={index === 0 ? `/river` : `/river/${index}`}
+                  key={index}
+                  className={`w-5 h-5 sm:w-4 sm:h-4 md:w-8 md:h-8 flex items-center justify-center rounded-full text-xs sm:text-sm ${
+                    index + 1 < currentStep
+                      ? "bg-customGreen"
+                      : index + 1 === currentStep
+                      ? "bg-customDGreen"
+                      : "bg-gray-400"
+                  }`}
+                >
+                  {index + 1}
+                </Link>
+              ))}
+            </div>
           </div>
-        </div>
-      </header>
+        </header>
+      )}
 
       {/* 페이지 콘텐츠 */}
       <main className="">{children}</main>

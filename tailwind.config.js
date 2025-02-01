@@ -45,12 +45,21 @@ module.exports = {
             transformOrigin: "left",
           },
         },
+        marquee: {
+          "0%": {
+            transform: "translateX(-100%)",
+          },
+          "100%": {
+            transform: "translateX(100%)",
+          },
+        },
       },
       animation: {
         fadeIn: "fadeIn 2s ease-in-out",
         underline: "underline 1.5s ease-out forwards",
         credits: "credits 1s linear",
         button: "buttonPop 2s ease-in-out 1.5s forwards",
+        marquee: "marquee 7s linear infinite;",
       },
     },
   },
