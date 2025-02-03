@@ -351,8 +351,8 @@ export default function EndingPage({ name }: { name: string }) {
         </S.ArticleStyle>
         {/* {videoId && ( */}
         <iframe
-          width="150"
-          height="150"
+          width="0"
+          height="0"
           src={`https://www.youtube.com/embed/${videoId}?autoplay=1&loop=1&playlist=${videoId}&mute=${
             isMuted ? "1" : "0"
           }`}
