@@ -341,18 +341,18 @@ export default function EndingPage({ name }: { name: string }) {
             어떠신지?
           </p>
         </S.ArticleStyle>
-        {videoId && (
-          <iframe
-            width="0"
-            height="0"
-            src={`https://www.youtube.com/embed/${videoId}?autoplay=1&loop=1&playlist=${videoId}&mute=${
-              isMuted ? "1" : "0"
-            }`}
-            frameBorder="0"
-            allow="autoplay; encrypted-media"
-            referrerPolicy="no-referrer-when-downgrade"
-          />
-        )}
+        {/* {videoId && ( */}
+        <iframe
+          width="150"
+          height="150"
+          src={`https://www.youtube.com/embed/${videoId}?autoplay=1&loop=1&playlist=${videoId}&mute=${
+            isMuted ? "1" : "0"
+          }`}
+          frameBorder="0"
+          allow="autoplay; encrypted-media"
+          referrerPolicy="no-referrer-when-downgrade"
+        />
+        {/* )} */}
 
         {/* <div className="text-center mt-10">
           {questions.map((question, index) => (
