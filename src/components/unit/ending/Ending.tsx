@@ -23,9 +23,14 @@ export default function EndingPage({ name }: { name: string }) {
     if (name) {
       fetchFirebaseData(String(name));
       fetchImages();
-      fetchYouTubeVideo();
     }
   }, [name]);
+
+  useEffect(() => {
+    if (data?.answer10) {
+      fetchYouTubeVideo();
+    }
+  }, [data?.answer10]);
 
   const fetchImages = async () => {
     if (!name) return;
@@ -73,12 +78,15 @@ export default function EndingPage({ name }: { name: string }) {
           data?.answer10
         )}&type=video&key=${apiKey}`
       );
-      console.log("google youtube response:", response);
+      console.log("YouTube API 응답:", response.data); // ✅ API 응답 확인
+
       if (response.data.items.length > 0) {
         setVideoId(response.data.items[0].id.videoId);
+      } else {
+        console.warn("YouTube API에서 검색된 영상이 없음.");
       }
     } catch (error) {
-      console.error("YouTube 검색 중 오류 발생:", error);
+      console.error("YouTube API 요청 실패:", error);
     }
   };
 
