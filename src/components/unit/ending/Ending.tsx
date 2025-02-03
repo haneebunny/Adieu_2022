@@ -311,9 +311,14 @@ export default function EndingPage({ name }: { name: string }) {
           <div className="border p-2">
             <p className="italic">2024년의 MUSIC,,, is</p>
             <p className="text-center text-pink-500">{data?.answer10}</p>
-            <button onClick={toggleMute}>
-              "들어볼래요? ⏯"(왠지 누르고 싶게 생겼다.)
-            </button>
+            <p>"들어볼래요?"</p>
+            {isMuted ? (
+              <button onClick={toggleMute}>💛(왠지 누르고 싶게 생겼다.)</button>
+            ) : (
+              <button onClick={toggleMute}>
+                🖤(누르면 노래가 멈출 것 같다.)
+              </button>
+            )}
             <p className="italic">하나는 아쉬우니까 세 개 더...</p>
             <div className="border p-2">
               <p>{getDisplayText(data["answer11"])} </p>
