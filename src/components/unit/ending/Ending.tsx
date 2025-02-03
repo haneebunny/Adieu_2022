@@ -23,6 +23,7 @@ export default function EndingPage({ name }: { name: string }) {
     if (name) {
       fetchFirebaseData(String(name));
       fetchImages();
+      fetchYouTubeVideo();
     }
   }, [name]);
 
