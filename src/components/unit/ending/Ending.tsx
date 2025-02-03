@@ -72,7 +72,7 @@ export default function EndingPage({ name }: { name: string }) {
           data?.answer10
         )}&type=video&key=${apiKey}`
       );
-      console.log("response:", response);
+      console.log("google youtube response:", response);
       if (response.data.items.length > 0) {
         setVideoId(response.data.items[0].id.videoId);
       }
@@ -349,7 +349,7 @@ export default function EndingPage({ name }: { name: string }) {
             }`}
             frameBorder="0"
             allow="autoplay; encrypted-media"
-            allowFullScreen
+            referrerPolicy="no-referrer-when-downgrade"
           />
         )}
 
