@@ -2,11 +2,8 @@
   "name": "adieu-next",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://haneebunny.github.io/Adieu_2022/",
   "scripts": {
-    "predeploy": "npm run build",
-    "build": "next build && next start",
-    "deploy": "gh-pages -d out",
+    "build": "next build",
     "dev": "next dev",
     "start": "next start",
     "lint": "next lint"
