@@ -82,7 +82,7 @@ export default function Question1() {
       {/* 첫 번째 질문 */}
       <div className="text-center">
         <p className="text-white font-bold mb-6 animate-fadeIn">
-          올해 2024년... 한 마디로 말하자면,
+          올해 2025년... 한 마디로 말하자면,
         </p>
         <textarea
           value={answer1}
@@ -95,7 +95,7 @@ export default function Question1() {
             onClick={handleNextStep}
             className="  text-white hover:scale-150 transition-transform duration-300 mt-4"
           >
-            여기서 말하는 올해는 2024년이야...^^
+            여기서 말하는 올해는 2025년이야...^^
           </button>
         )}
       </div>

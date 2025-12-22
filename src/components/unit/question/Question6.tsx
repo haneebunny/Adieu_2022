@@ -60,18 +60,38 @@ export default function Question6() {
       setAnswer24(file);
       setPreview24(URL.createObjectURL(file)); // 미리보기 URL 생성
     }
+
+    // 같은 파일을 다시 선택해도 change 이벤트가 잘 일어나도록 초기화
+    e.target.value = "";
   };
 
-  // 10장 사진 파일 선택 핸들러
+  // 10장 사진 파일 선택 핸들러 (여러 번 나눠서 첨부 가능하게 수정)
   const handlePhotoCollectionChange = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
-    if (e.target.files) {
-      const files = Array.from(e.target.files);
-      const validFiles = files.slice(0, 10); // 최대 10개까지만 허용
-      setAnswer25(validFiles);
-      setPreview25(validFiles.map((file) => URL.createObjectURL(file))); // 각 파일의 미리보기 URL 생성
+    if (!e.target.files) return;
+
+    // 새로 선택한 파일들을 배열로 변환
+    const newFiles = Array.from(e.target.files); // 이번에 추가로 고른 파일들
+
+    // 기존에 선택된 파일들 + 새로 고른 파일들 합치기
+    let mergedFiles = [...answer25, ...newFiles];
+
+    // 총 개수가 10개를 넘으면 자르고, 경고 메시지 보여주기
+    if (mergedFiles.length > 10) {
+      alert("사진은 최대 10장까지만!");
+      mergedFiles = mergedFiles.slice(0, 10); // 앞에서부터 10개만 사용
     }
+
+    // 상태 업데이트: 파일 배열
+    setAnswer25(mergedFiles);
+
+    // 상태 업데이트: 미리보기 URL 배열 (파일 배열 기준으로 다시 생성)
+    const mergedPreviews = mergedFiles.map((file) => URL.createObjectURL(file));
+    setPreview25(mergedPreviews);
+
+    // 같은 파일을 다시 선택할 수 있도록 input 값 비우기
+    e.target.value = "";
   };
 
   // 업로드 버튼 클릭 핸들러
@@ -108,18 +128,28 @@ export default function Question6() {
       {step === 1 && (
         <div className="flex flex-col items-center text-center animate-fadeIn mb-20">
           <h1 className="font-bold text-white mb-6">
-            올해의 대표 사진을 정하자면? <br /> ㅎㅎ...2024년 얘기하는 거 알지?
+            올해의 대표 사진을 정하자면? <br />
           </h1>
+
+          {/* ✅ 대표 사진 선택 버튼 + input (단일 파일) */}
+          <label
+            htmlFor="repPhotoInput"
+            className="inline-block bg-white text-black px-4 py-2 rounded-lg cursor-pointer mb-4"
+          >
+            대표 사진 선택
+          </label>
           <input
+            id="repPhotoInput"
             type="file"
             accept="image/*"
-            onChange={handleRepresentativePhotoChange}
-            className="w-2/3 mb-4 text-white"
+            onChange={handleRepresentativePhotoChange} // 대표 사진 핸들러 사용
+            className="hidden"
           />
+
           {answer24 && (
             <div>
               <div className="mb-6 flex flex-col justify-center items-center">
-                <p className="text-white">✨{userName}의 2024년✨</p>
+                <p className="text-white">✨{userName}의 2025년✨</p>
                 <img
                   src={preview24}
                   alt="대표 사진 미리보기"
@@ -133,23 +163,45 @@ export default function Question6() {
                 앨범에서 즐겨찾기한 사진을 참고해조... ❤︎ <br />난 너무 많아서
                 고르기 힘들어
               </p>
-              <input
-                type="file"
-                accept="image/*"
-                multiple
-                onChange={handlePhotoCollectionChange}
-                className="w-2/3 mb-4 text-white"
-              />
+              <p className="text-white mb-2">{answer25.length} / 10</p>
+              <label className="inline-block bg-white text-black px-4 py-2 rounded cursor-pointer">
+                파일 선택
+                <input
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  onChange={handlePhotoCollectionChange}
+                  className="hidden" // 실제 input은 숨기기
+                />
+              </label>
+
               {preview25.length > 0 && (
                 <div className="flex justify-center">
                   <div className="w-3/4 grid grid-cols-3 gap-4 mb-6">
                     {preview25.map((src, index) => (
-                      <img
-                        key={index}
-                        src={src}
-                        alt={`사진 ${index + 1} 미리보기`}
-                        className="w-32 h-32 object-cover rounded-lg"
-                      />
+                      <div key={index} className="relative">
+                        {/* 한국어 주석: 썸네일 이미지 */}
+                        <img
+                          src={src}
+                          alt={`사진 ${index + 1} 미리보기`}
+                          className="w-32 h-32 object-cover rounded-lg"
+                        />
+                        {/* 한국어 주석: 오른쪽 위 X 버튼으로 해당 사진 삭제 */}
+                        <button
+                          type="button"
+                          className="absolute top-1 right-1 bg-black/60 text-white text-xs px-1 rounded"
+                          onClick={() => {
+                            setAnswer25((prev) =>
+                              prev.filter((_, i) => i !== index)
+                            );
+                            setPreview25((prev) =>
+                              prev.filter((_, i) => i !== index)
+                            );
+                          }}
+                        >
+                          ✕
+                        </button>
+                      </div>
                     ))}
                   </div>
                 </div>

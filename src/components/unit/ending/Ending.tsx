@@ -145,23 +145,23 @@ export default function EndingPage({ name }: { name: string }) {
   const questions = [
     "올해는 한 마디로,",
     `${name}의  🍀`,
-    `${name} 2024 최고의 순간`,
+    `${name} 2025 최고의 순간`,
     "가장 자주 연락한 사람은... 두구두구~! 바로바로!",
     `${name}에게 가장 큰 영향을 준 사람은 `,
-    "2024년에도 누군가를 알게 되었어.",
+    "2025년에도 누군가를 알게 되었어.",
     "생각지도 못한 관심을 준 사람,",
     "연락해볼까?♤",
     "† 대박적 고마운 사람 Top 5 †",
-    `${name} 2024년의 노래 🎵`,
-    "2024년의 노래들을 소개합니다 ^^",
-    "2024년의 동영상🥸",
+    `${name} 2025년의 노래 🎵`,
+    "2025년의 노래들을 소개합니다 ^^",
+    "2025년의 동영상🥸",
     "영향을 미친 영상은 🥴",
     "2025년에 처음으로 듣고 싶던 노래, 들었어?",
-    "📖2024 대표 책📖",
+    "📖2025 대표 책📖",
     "2025년에 이 책을 꼭 읽도록!",
-    "2024, 나를 감동시킨 영화",
+    "2025, 나를 감동시킨 영화",
     "2025년에 보고 싶은 영화는,",
-    "SOUL FOOD of 2024 is ",
+    "SOUL FOOD of 2025 is ",
     "조금이라도 행복에 기여한 말😗",
     "🎀취미로는 이런 걸 했지,🎀",
     "새로운 취미도 생겼어!!",
@@ -172,7 +172,7 @@ export default function EndingPage({ name }: { name: string }) {
 
   return (
     <S.Wrapper className="w-full min-h-screen flex flex-col items-center bg-gray-100 text-black">
-      <h1>{name}의 2024 ?</h1>
+      <h1>{name}의 2025 ?</h1>
       <h1>"{data?.answer1}"</h1>
       <div className="w-full border border-b" />
       <S.NewsPaperLayout>
@@ -194,7 +194,7 @@ export default function EndingPage({ name }: { name: string }) {
             className="object-cover"
             src={images?.filter((img) => img.includes("answer24"))}
           />
-          <span>▲ {name}의 2024년을 대표하는 사진이다. </span>
+          <span>▲ {name}의 2025년을 대표하는 사진이다. </span>
         </S.ArticleStyle>
 
         <S.ArticleStyle className="col-span-2">
@@ -318,7 +318,7 @@ export default function EndingPage({ name }: { name: string }) {
         <S.ArticleStyle className="col-span-2">
           <h2 className="text-center">그의 왓츠인마이엠피쓰리</h2>
           <div className="border p-2">
-            <p className="italic">2024년의 MUSIC,,, is</p>
+            <p className="italic">2025년의 MUSIC,,, is</p>
             <p className="text-center text-pink-500">{data?.answer10}</p>
             <p>"들어볼래요?"</p>
             {isMuted ? (
