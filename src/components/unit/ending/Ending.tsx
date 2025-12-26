@@ -1,5 +1,6 @@
+// pages/river/ending_credit/[publicId].tsx (파일 이름은 publicId 기준이라고 가정)
+
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../../../firebase";
 import axios from "axios";
@@ -9,33 +10,39 @@ import { GetServerSideProps } from "next";
 import * as S from "./Ending.styles";
 
 interface AnswerData {
-  name: string;
+  publicId: string;
   [key: string]: any; // 모든 답변 데이터
 }
 
-export default function EndingPage({ name }: { name: string }) {
+export default function EndingPage({ publicId }: { publicId: string }) {
   const [data, setData] = useState<AnswerData | null>(null);
   const [images, setImages] = useState<string[]>([]);
   const [videoId, setVideoId] = useState<string | null>(null);
   const [isMuted, setIsMuted] = useState(true);
 
+  // 🔹 publicId로 Firestore에서 문서 가져오기
   useEffect(() => {
-    if (name) {
-      fetchFirebaseData(String(name));
-      fetchImages();
-    }
-  }, [name]);
+    if (!publicId) return;
+    fetchFirebaseData(publicId);
+  }, [publicId]);
 
+  // 🔹 Firestore 데이터가 준비되면: 유튜브 + 클라우디너리 이미지 로딩
   useEffect(() => {
-    if (data?.answer10) {
-      fetchYouTubeVideo();
-    }
-  }, [data?.answer10]);
+    if (!data) return;
 
-  const fetchImages = async () => {
-    if (!name) return;
+    if (data.answer10) {
+      fetchYouTubeVideo(data.answer10);
+    }
+
+    if (data.name) {
+      fetchImages(data.name);
+    }
+  }, [data]);
+
+  // 🔹 클라우디너리에서 이미지 가져오기 (이름 기준)
+  const fetchImages = async (userName: string) => {
     try {
-      const response = await axios.post("/api/cloudinary", { name });
+      const response = await axios.post("/api/cloudinary", { name: userName });
       const imageUrls = response.data.map((img: any) => img.url);
       setImages(imageUrls);
     } catch (error) {
@@ -44,41 +51,41 @@ export default function EndingPage({ name }: { name: string }) {
   };
 
   // mute 토글
-  const toggleMute = () => setIsMuted(!isMuted);
+  const toggleMute = () => setIsMuted((prev) => !prev);
 
-  // 데이터 정규화 함수
-  const normalizeData = (data: Record<string, any>): AnswerData => {
-    const normalized: AnswerData = { name: "" }; // 기본 구조
+  // 🔹 문자열로 저장된 JSON 배열을 실제 배열로 변환
+  const normalizeData = (raw: Record<string, any>): AnswerData => {
+    const normalized: AnswerData = { publicId: raw.publicId || "" };
 
-    for (const key in data) {
+    for (const key in raw) {
+      const value = raw[key];
       if (
-        typeof data[key] === "string" &&
-        data[key].startsWith("[") &&
-        data[key].endsWith("]")
+        typeof value === "string" &&
+        value.startsWith("[") &&
+        value.endsWith("]")
       ) {
         try {
-          normalized[key] = JSON.parse(data[key]) as string[]; // JSON 배열로 변환
+          normalized[key] = JSON.parse(value);
         } catch {
-          normalized[key] = data[key]; // 변환 실패 시 문자열 그대로
+          normalized[key] = value;
         }
       } else {
-        normalized[key] = data[key];
+        normalized[key] = value;
       }
     }
 
     return normalized;
   };
 
-  const fetchYouTubeVideo = async () => {
-    if (!data?.answer10) return;
+  // 🔹 유튜브 검색
+  const fetchYouTubeVideo = async (keyword: string) => {
     try {
-      const apiKey = "AIzaSyCwmlYLtWaTvaFMAsDsNia6PioZanwZpxU"; // 🔥 여기에 YouTube API 키 입력
+      const apiKey = "AIzaSyCwmlYLtWaTvaFMAsDsNia6PioZanwZpxU"; // TODO: env로 빼는 게 안전
       const response = await axios.get(
         `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(
-          data?.answer10
+          keyword
         )}&type=video&key=${apiKey}`
       );
-      console.log("YouTube API 응답:", response.data); // ✅ API 응답 확인
 
       if (response.data.items.length > 0) {
         setVideoId(response.data.items[0].id.videoId);
@@ -90,20 +97,22 @@ export default function EndingPage({ name }: { name: string }) {
     }
   };
 
-  const fetchFirebaseData = async (userName: string) => {
+  // 🔹 publicId로 Firestore에서 응답 1개 가져오기
+  const fetchFirebaseData = async (publicIdValue: string) => {
     try {
       const q = query(
         collection(db, "responses"),
-        where("name", "==", userName)
+        where("publicId", "==", publicIdValue)
       );
       const querySnapshot = await getDocs(q);
+
       if (!querySnapshot.empty) {
         const docData = querySnapshot.docs[0].data();
-        setData(normalizeData(docData));
-        console.log("받은 데이터::", data);
-        if (data?.answer10) fetchYouTubeVideo();
+        const normalized = normalizeData(docData);
+        setData(normalized);
+        console.log("받은 데이터::", normalized);
       } else {
-        alert("Firebase 데이터가 없습니다.");
+        alert("해당 아이디에 해당하는 Firebase 데이터가 없습니다.");
       }
     } catch (error) {
       console.error("Error fetching Firebase data:", error);
@@ -111,20 +120,13 @@ export default function EndingPage({ name }: { name: string }) {
     }
   };
 
-  // const fetchImages = (userName: string) => {
-  //   const urls = [];
-  //   for (let i = 1; i <= 10; i++) {
-  //     urls.push(`/img/${userName}/${userName}_answer24_${i}.png`);
-  //   }
-  // };
-
   const getDisplayText = (text: any) => {
     if (typeof text === "string") {
       return text.trim() && text.length > 1 ? <p>{text}</p> : "이건 없었어.";
     }
     if (Array.isArray(text)) {
       return text.map((t, index) =>
-        t.trim() && t.length > 1 ? (
+        typeof t === "string" && t.trim() && t.length > 1 ? (
           <p key={index}>{`${index + 1}위 ${t}`}</p>
         ) : (
           <p key={index}>이건 없었어.</p>
@@ -142,47 +144,23 @@ export default function EndingPage({ name }: { name: string }) {
     );
   }
 
-  const questions = [
-    "올해는 한 마디로,",
-    `${name}의  🍀`,
-    `${name} 2025 최고의 순간`,
-    "가장 자주 연락한 사람은... 두구두구~! 바로바로!",
-    `${name}에게 가장 큰 영향을 준 사람은 `,
-    "2025년에도 누군가를 알게 되었어.",
-    "생각지도 못한 관심을 준 사람,",
-    "연락해볼까?♤",
-    "† 대박적 고마운 사람 Top 5 †",
-    `${name} 2025년의 노래 🎵`,
-    "2025년의 노래들을 소개합니다 ^^",
-    "2025년의 동영상🥸",
-    "영향을 미친 영상은 🥴",
-    "2025년에 처음으로 듣고 싶던 노래, 들었어?",
-    "📖2025 대표 책📖",
-    "2025년에 이 책을 꼭 읽도록!",
-    "2025, 나를 감동시킨 영화",
-    "2025년에 보고 싶은 영화는,",
-    "SOUL FOOD of 2025 is ",
-    "조금이라도 행복에 기여한 말😗",
-    "🎀취미로는 이런 걸 했지,🎀",
-    "새로운 취미도 생겼어!!",
-    "what will you do for fun in 2025?",
-    "올해의 대표 사진",
-    "올해의 사진 10장만 뽑아서 보여줘!",
-  ];
+  // 🔹 이후 JSX에서 쓸 이름 (문서에 name이 없으면 publicId라도 보여주기)
+  const userName: string = data.name || publicId;
 
   return (
     <S.Wrapper className="w-full min-h-screen flex flex-col items-center bg-gray-100 text-black">
-      <h1>{name}의 2025 ?</h1>
+      <h1>{userName}의 2025 ?</h1>
       <h1>"{data?.answer1}"</h1>
       <div className="w-full border border-b" />
+
       <S.NewsPaperLayout>
         <S.ArticleStyle className="flex flex-col">
           <h3 className="text-center">LUCKY-POINT</h3>
           <p className=" text-5xl font-bold">{data?.answer2}</p>
           <div className="border border-b-gray100"></div>
           <h1 className=" text-gray-500">
-            신기자는 취재한 결과를 모조리 공개했다. 이번 호는 {name}에 대한 모든
-            것을 파헤친다! 는 일념으로.
+            신기자는 취재한 결과를 모조리 공개했다. 이번 호는 {userName}에 대한
+            모든 것을 파헤친다! 는 일념으로.
           </h1>
           <h1 className=" text-red-500">
             이 신문에는 광고가 포함되어 있을 수 있습니다.
@@ -192,9 +170,12 @@ export default function EndingPage({ name }: { name: string }) {
         <S.ArticleStyle className="w-full">
           <img
             className="object-cover"
-            src={images?.filter((img) => img.includes("answer24"))}
+            src={
+              images.find((img) => img.includes("answer24")) ||
+              "/img/placeholder.png"
+            }
           />
-          <span>▲ {name}의 2025년을 대표하는 사진이다. </span>
+          <span>▲ {userName}의 2025년을 대표하는 사진이다. </span>
         </S.ArticleStyle>
 
         <S.ArticleStyle className="col-span-2">
@@ -202,23 +183,23 @@ export default function EndingPage({ name }: { name: string }) {
           <div className="border p-2">
             <p>{getDisplayText(data["answer3"])} </p>
           </div>
-
-          <p>{name} : "이런 순간들이 있었죠..." </p>
+          <p>{userName} : "이런 순간들이 있었죠..." </p>
         </S.ArticleStyle>
+
         <S.ArticleStyle className="col-span-1">
           <h2 className="text-center">사생활을 캐보다</h2>
           <div className="border p-2">
             <p className="italic">가장 자주 연락한 사람은 누군가요?</p>
             <p>
-              {name} : "(멋쩍게 웃으며){data?.answer4}""
+              {userName} : "(멋쩍게 웃으며){data?.answer4}""
             </p>
             <p className="italic">새로 친해진 사람은?</p>
             <p>
-              {name} : "{data?.answer6}"
+              {userName} : "{data?.answer6}"
             </p>
             <p className="italic">기대 안 했는데 관심을 준 사람도 있나요?</p>
             <p>
-              {name} : "그건 {data?.answer7}
+              {userName} : "그건 {data?.answer7}
               이죠."
             </p>
             <p className="italic">
@@ -233,20 +214,21 @@ export default function EndingPage({ name }: { name: string }) {
 
           <p>충격 소신 발언에 기자는 정신을 차릴 수 없었다.</p>
         </S.ArticleStyle>
+
         <S.ArticleStyle className="col-span-1">
           <h2 className="text-center">고마워요!</h2>
           <div className="border p-2">
             <p>{getDisplayText(data["answer9"])} </p>
           </div>
-
-          <p>{name} : "정말 감사합니다. Merci beaucoup. " </p>
+          <p>{userName} : "정말 감사합니다. Merci beaucoup. " </p>
         </S.ArticleStyle>
+
         <S.ArticleStyle className="col-span-2">
           <h2 className="text-center">책책책, 책을 읽읍시다.</h2>
           <div className="border p-2">
             <p>
-              {name} : "{data?.answer15}, 이 책이 좋았어요.{data?.answer16}은
-              2025년에 읽어보려 해요."
+              {userName} : "{data?.answer15}, 이 책이 좋았어요.{data?.answer16}
+              은 2025년에 읽어보려 해요."
             </p>
             <p className="italic">
               그는 잠시 고개를 갸웃하더니 영화도 말해도 되냐며 말을 이어갔다.
@@ -254,7 +236,7 @@ export default function EndingPage({ name }: { name: string }) {
             </p>
 
             <p>
-              {name} : "{data?.answer17} 이 영화를 보고 살짝 감정이...
+              {userName} : "{data?.answer17} 이 영화를 보고 살짝 감정이...
               북받쳤죠."
             </p>
             <p className="italic">
@@ -262,7 +244,7 @@ export default function EndingPage({ name }: { name: string }) {
               계속 받아적었다.
             </p>
             <p>
-              {name} : "{data?.answer18} 이건 2025년에 보려고 해요."
+              {userName} : "{data?.answer18} 이건 2025년에 보려고 해요."
             </p>
           </div>
 
@@ -272,49 +254,63 @@ export default function EndingPage({ name }: { name: string }) {
         <S.ArticleStyle className="w-full">
           <img
             className="object-cover"
-            src={images?.filter((img) => img.includes("answer25"))[0]}
+            src={
+              images.filter((img) => img.includes("answer25"))[0] ||
+              "/img/placeholder.png"
+            }
           />
           <span>▲ (광고) </span>
         </S.ArticleStyle>
+
         <S.ArticleStyle className="col-span-1">
           <h2 className="text-center">what do you do for fun?</h2>
           <div className="border p-2">
             <p className="italic">취미는 어떤 걸 즐기셨습니까?</p>
 
             <p>
-              {name} : "{data?.answer19}, 이게 진짜 맛있었죠."
+              {userName} : "{data?.answer19}, 이게 진짜 맛있었죠."
             </p>
             <p className="italic">아뇨. 전 취미를 여쭤봤는데요.</p>
 
             <p>
-              {name} : "{data?.answer21} 이런 걸 주로 했어요."
+              {userName} : "{data?.answer21} 이런 걸 주로 했어요."
             </p>
             <p className="italic">그는 멋쩍게 웃으며 대답을 이어나갔다.</p>
             <p>
-              {name} : "새로 생긴 취미는, 아마도 {data?.answer22}... 도전해보고
-              싶은 건 {data?.answer23}고요."
+              {userName} : "새로 생긴 취미는, 아마도 {data?.answer22}...
+              도전해보고 싶은 건 {data?.answer23}고요."
             </p>
           </div>
 
           <p>A passing pig : "맛있는 음식은 좋은 취미와 같다."</p>
         </S.ArticleStyle>
+
         <div className="col-span-2 relative w-full overflow-hidden bg-black text-white">
           <h1 className="animate-marquee">{data?.answer20}</h1>
         </div>
+
         <S.ArticleStyle className="col-span-1">
           <img
             className="object-cover"
-            src={images?.filter((img) => img.includes("answer25"))[1]}
+            src={
+              images.filter((img) => img.includes("answer25"))[1] ||
+              "/img/placeholder.png"
+            }
           />
           <span>▲ (광고) </span>
         </S.ArticleStyle>
+
         <S.ArticleStyle className="col-span-1">
           <img
             className="object-cover"
-            src={images?.filter((img) => img.includes("answer25"))[3]}
+            src={
+              images.filter((img) => img.includes("answer25"))[3] ||
+              "/img/placeholder.png"
+            }
           />
           <span>▲ (광고) </span>
         </S.ArticleStyle>
+
         <S.ArticleStyle className="col-span-2">
           <h2 className="text-center">그의 왓츠인마이엠피쓰리</h2>
           <div className="border p-2">
@@ -333,13 +329,13 @@ export default function EndingPage({ name }: { name: string }) {
               <p>{getDisplayText(data["answer11"])} </p>
             </div>
             <p>
-              {name} : "{data?.answer12}, 이 영상이 mp3에 있어요.""
+              {userName} : "{data?.answer12}, 이 영상이 mp3에 있어요.""
             </p>
             <p className="italic">
               그럼, 없을 수도 있지만, 당신에게 영향을 미친 영상이 있나요?
             </p>
             <p>
-              {name} : "아마도 {data?.answer13}..."
+              {userName} : "아마도 {data?.answer13}..."
             </p>
           </div>
 
@@ -349,26 +345,21 @@ export default function EndingPage({ name }: { name: string }) {
             어떠신지?
           </p>
         </S.ArticleStyle>
-        {/* {videoId && ( */}
+
         <iframe
           width="0"
           height="0"
-          src={`https://www.youtube.com/embed/${videoId}?autoplay=1&loop=1&playlist=${videoId}&mute=${
-            isMuted ? "1" : "0"
-          }`}
+          src={
+            videoId
+              ? `https://www.youtube.com/embed/${videoId}?autoplay=1&loop=1&playlist=${videoId}&mute=${
+                  isMuted ? "1" : "0"
+                }`
+              : undefined
+          }
           frameBorder="0"
           allow="autoplay; encrypted-media"
           referrerPolicy="no-referrer-when-downgrade"
         />
-        {/* )} */}
-
-        {/* <div className="text-center mt-10">
-          {questions.map((question, index) => (
-            <p key={index} className="p-16 leading-relaxed">
-              {question} {getDisplayText(data[`answer${index + 1}`])}
-            </p>
-          ))}
-        </div> */}
       </S.NewsPaperLayout>
 
       <S.ArticleStyle className="col-span-2">
@@ -387,3 +378,18 @@ export default function EndingPage({ name }: { name: string }) {
     </S.Wrapper>
   );
 }
+
+// 🔹 URL의 [publicId] 파라미터를 컴포넌트 props로 넘기기
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { publicId } = context.params || {};
+
+  if (typeof publicId !== "string") {
+    return { notFound: true };
+  }
+
+  return {
+    props: {
+      publicId,
+    },
+  };
+};

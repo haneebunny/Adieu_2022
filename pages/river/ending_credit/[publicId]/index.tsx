@@ -2,15 +2,15 @@ import { GetServerSideProps } from "next";
 import Ending from "../../../../src/components/unit/ending/Ending";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { name } = context.params!;
+  const { publicId } = context.params!;
 
   return {
     props: {
-      name,
+      publicId,
     },
   };
 };
 
-export default function EndingPage({ name }: { name: string }) {
-  return <Ending name={name} />;
+export default function EndingPage({ publicId }: { publicId: string }) {
+  return <Ending publicId={publicId} />;
 }

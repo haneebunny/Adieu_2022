@@ -110,7 +110,16 @@ ${infoText}
       id = `user${Math.floor(1000 + Math.random() * 9000)}`;
     }
 
-    return res.status(200).json({ id });
+    // ✅ 유일성 보장용 suffix 추가 (시간 + 랜덤)
+    //   - 시간: Date.now() → 36진수로 줄이기
+    //   - 랜덤: 0~1295 사이 숫자를 36진수로
+    const timePart = Date.now().toString(36).slice(-4); // 4글자
+    const randPart = Math.floor(Math.random() * 36 * 36)
+      .toString(36)
+      .padStart(2, "0"); // 2글자
+    let finalId = `${id}${timePart}${randPart}`;
+
+    return res.status(200).json({ finalId });
   } catch (err: any) {
     console.error("ID 생성 실패:", err);
     return res
