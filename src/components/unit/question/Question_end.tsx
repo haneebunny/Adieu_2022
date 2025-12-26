@@ -29,9 +29,30 @@ export default function QuestionEnd() {
         }),
       });
 
-      const { id: publicId } = await idResponse.json();
-      console.log("AI 생성한 ID:", publicId);
+      // 🔍 1-1. 먼저 raw 텍스트로 받아서 콘솔에 찍어보기
+      const raw = await idResponse.text();
+      console.log("generate-id raw response:", idResponse.status, raw);
 
+      // 🔴 상태코드가 200이 아니면 여기서 중단
+      if (!idResponse.ok) {
+        alert("아이디 생성 중 서버 에러가 발생했어요.");
+        setIsUploading(false);
+        return;
+      }
+
+      // 🔐 1-2. JSON 파싱이 안 되면 여기서 잡기
+      let publicId = "";
+      try {
+        const json = JSON.parse(raw);
+        publicId = json.id;
+      } catch (e) {
+        console.error("ID 응답 JSON 파싱 실패:", e, raw);
+        alert("아이디 응답 형식이 이상해요. 콘솔 로그를 확인해보자!");
+        setIsUploading(false);
+        return;
+      }
+
+      console.log("AI 생성한 ID:", publicId);
       setGeneratedId(publicId);
 
       // 2) Firestore 저장
@@ -115,23 +136,27 @@ export default function QuestionEnd() {
         </div>
       )}
       {/* 크레딧 텍스트 */}
-      <div className="absolute top-[40%] animate-credits text-center">
-        <p className="text-lg leading-relaxed">
-          와우 수고하셨습니다! 더 수정하다간 2025년도 가버릴 것 같아요... <br />
-          분명 2022년부터 만들던 건데 ^ㅁ^😞; <br /> 올해가 올해가 아니게
-          되어버렸지만 올해 회고록 작성이 끝났습니다.
-          <br /> ↓ 지금까지 쓴 것을 꼭 꼭 제출해주세요~~~ ↓
-        </p>
-      </div>
+      {!showIdPage && (
+        <div>
+          <div className="absolute top-[40%] animate-credits text-center">
+            <p className="text-lg leading-relaxed">
+              올해도 수고하셨습니다! 2025년도 오류를 완벽하게 잡진 못 했어요.{" "}
+              <br />
+              😞; <br />
+              <br /> ↓ 지금까지 쓴 것을 꼭 꼭 제출해주세요~~~ ↓
+            </p>
+          </div>
 
-      {/* 버튼 */}
-      <button
-        onClick={handleSubmit}
-        className="bg-customGreen text-white py-2 px-6 rounded-lg hover:bg-customDGreen absolute top-[55%] opacity-0 animate-button"
-        disabled={isUploading}
-      >
-        {isUploading ? "보내는 중..." : "보내기"}
-      </button>
+          {/* 버튼 */}
+          <button
+            onClick={handleSubmit}
+            className="bg-customGreen text-white py-2 px-6 rounded-lg hover:bg-customDGreen absolute top-[55%] opacity-0 animate-button"
+            disabled={isUploading}
+          >
+            {isUploading ? "보내는 중..." : "보내기"}
+          </button>
+        </div>
+      )}
     </div>
   );
 }

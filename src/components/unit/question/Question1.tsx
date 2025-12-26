@@ -95,7 +95,7 @@ export default function Question1() {
             onClick={handleNextStep}
             className="  text-white hover:scale-150 transition-transform duration-300 mt-4"
           >
-            여기서 말하는 올해는 2025년이야...^^
+            수고했어요.
           </button>
         )}
       </div>

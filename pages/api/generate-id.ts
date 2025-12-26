@@ -17,6 +17,16 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  if (!process.env.OPENAI_API_KEY) {
+    return res
+      .status(500)
+      .json({ error: "서버에 OPENAI_API_KEY가 설정되어 있지 않습니다." });
+  }
+  // GET으로 들어오면 그냥 상태 체크용 JSON만 돌려주기
+  if (req.method === "GET") {
+    return res.status(200).json({ status: "ok", message: "generate-id alive" });
+  }
+
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Only POST allowed" });
   }

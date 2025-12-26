@@ -199,7 +199,7 @@ export default function Question2() {
                 onClick={handleNextPage}
                 className="  text-white mt-4 hover:scale-150 transition-transform duration-300"
               >
-                나도 있어?!
+                고마운 사람이 그렇게나 많다니!
               </button>
             )}
           </div>

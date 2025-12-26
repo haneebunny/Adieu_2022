@@ -172,7 +172,7 @@ export default function Question3() {
               onClick={handleNextPage}
               className="  text-white mt-4 hover:scale-150 transition-transform duration-300"
             >
-              가취 들어요~~~ <br /> 코딩을 미루다가 2025년이 와버렸어;;
+              가취 들어요~~~ <br />
             </button>
           )}
         </div>
