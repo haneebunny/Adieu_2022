@@ -3,14 +3,40 @@ import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "../../../../firebase";
 
 export default function QuestionEnd() {
+  const CURRENT_YEAR = 2025;
+
   const [isUploading, setIsUploading] = useState(false);
+  const [showIdPage, setShowIdPage] = useState(false);
+  const [generatedId, setGeneratedId] = useState<string | null>(null);
 
   const handleSubmit = async () => {
     setIsUploading(true);
 
     try {
-      // 로컬 스토리지에서 모든 데이터 읽기
+      // 1) AI 기반 publicId 생성
+      const idResponse = await fetch("/api/generate-id", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: localStorage.getItem("name"),
+          soulFood: localStorage.getItem("answer3"),
+          otherAnswers: [
+            localStorage.getItem("answer1"),
+            localStorage.getItem("answer2"),
+            localStorage.getItem("answer4"),
+            localStorage.getItem("answer5"),
+          ],
+        }),
+      });
+
+      const { id: publicId } = await idResponse.json();
+      console.log("AI 생성한 ID:", publicId);
+
+      setGeneratedId(publicId);
+
+      // 2) Firestore 저장
       const allAnswers = {
+        publicId,
         name: localStorage.getItem("name"),
         answer1: localStorage.getItem("answer1"),
         answer2: localStorage.getItem("answer2"),
@@ -37,22 +63,16 @@ export default function QuestionEnd() {
         answer23: localStorage.getItem("answer23"),
         answer24: parseJSON(localStorage.getItem("answer24")),
         answer25: parseJSON(localStorage.getItem("answer25")),
-        createAt: serverTimestamp(),
+        createdAt: serverTimestamp(),
       };
 
-      console.log("Uploading all answers:", allAnswers);
+      await addDoc(collection(db, "responses"), allAnswers);
 
-      // Firestore 업로드
-      const docRef = await addDoc(collection(db, "responses"), allAnswers);
-
-      console.log("Document written with ID:", docRef.id);
-      alert("잘 보낸 것 같아요, 아마도!");
-
-      // // 저장 후 로컬 스토리지 초기화 (선택 사항)
-      // localStorage.clear();
+      // 3) 제출 완료 → 아이디 안내 화면으로 전환
+      setShowIdPage(true);
     } catch (error) {
-      console.error("Error uploading data to Firebase:", error);
-      alert("오류가 발생하면 난 어떡하지...");
+      console.error("업로드 에러:", error);
+      alert("오류가 발생했어요 ㅠㅠ");
     }
 
     setIsUploading(false);
@@ -70,6 +90,30 @@ export default function QuestionEnd() {
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-gray-900 text-white overflow-hidden relative">
+      {showIdPage && generatedId && (
+        <div className="min-h-screen flex flex-col justify-center items-center text-white">
+          <h1 className="text-2xl font-bold mb-4">🎉 제출이 완료되었습니다!</h1>
+          <p className="text-lg mb-4">
+            아래는 당신의 회고 아이디입니다.
+            <br /> (이 아이디로 나중에 다시 조회할 수 있어요)
+          </p>
+
+          <div className="bg-white text-black px-4 py-2 rounded-lg text-xl font-mono mb-6">
+            {generatedId}
+          </div>
+
+          <p className="text-sm opacity-70 mb-10">꼭 스크린샷 찍어두세요!</p>
+
+          <button
+            onClick={() =>
+              (window.location.href = `/river/ending_credit/${generatedId}`)
+            }
+            className="bg-customGreen py-2 px-6 rounded-lg"
+          >
+            회고록 보러가기
+          </button>
+        </div>
+      )}
       {/* 크레딧 텍스트 */}
       <div className="absolute top-[40%] animate-credits text-center">
         <p className="text-lg leading-relaxed">

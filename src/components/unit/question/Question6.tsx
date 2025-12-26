@@ -160,8 +160,7 @@ export default function Question6() {
 
               <h2 className="font-bold text-white">올해의 사진 10장 뽑아줘!</h2>
               <p className="text-white mb-6">
-                앨범에서 즐겨찾기한 사진을 참고해조... ❤︎ <br />난 너무 많아서
-                고르기 힘들어
+                앨범에서 즐겨찾기한 사진을 참고해주세요... ❤︎
               </p>
               <p className="text-white mb-2">{answer25.length} / 10</p>
               <label className="inline-block bg-white text-black px-4 py-2 rounded cursor-pointer">
