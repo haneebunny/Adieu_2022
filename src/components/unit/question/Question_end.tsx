@@ -28,6 +28,7 @@ export default function QuestionEnd() {
           ],
         }),
       });
+      console.log("idResponse status", idResponse.status);
 
       // 🔍 1-1. 먼저 raw 텍스트로 받아서 콘솔에 찍어보기
       const raw = await idResponse.text();

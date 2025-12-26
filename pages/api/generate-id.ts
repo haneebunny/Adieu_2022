@@ -17,21 +17,28 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  // ✅ 키가 없으면 여기서 바로 JSON 에러 반환 (500 HTML 방지)
   if (!process.env.OPENAI_API_KEY) {
     return res
       .status(500)
       .json({ error: "서버에 OPENAI_API_KEY가 설정되어 있지 않습니다." });
   }
-  // GET으로 들어오면 그냥 상태 체크용 JSON만 돌려주기
+
+  // ✅ GET: 상태 체크 + 간단 응답
   if (req.method === "GET") {
     return res.status(200).json({ status: "ok", message: "generate-id alive" });
   }
 
+  // ✅ POST만 실제 ID 생성 로직으로 보냄,
+  //   그 외 메소드는 200 + 안내 문구 (405 아예 안 씀)
   if (req.method !== "POST") {
-    return res.status(405).json({ error: "Only POST allowed" });
+    return res.status(200).json({
+      status: "noop",
+      message: `이 엔드포인트는 보통 POST로만 사용됩니다. (받은 메소드: ${req.method})`,
+    });
   }
 
-  // 하루 리셋
+  // 🔄 하루 리셋
   if (Date.now() - lastReset > ONE_DAY) {
     callCount = 0;
     lastReset = Date.now();
@@ -58,7 +65,6 @@ export default async function handler(
 - 기타 답변: ${(otherAnswers || []).join(" / ")}
     `.trim();
 
-    // ✅ responses.create 대신 chat.completions.create 사용
     const completion = await client.chat.completions.create({
       model: "gpt-4o-mini",
       messages: [
@@ -95,13 +101,11 @@ ${infoText}
         .json({ error: "아이디를 생성하지 못했어요.(빈 응답)" });
     }
 
-    // 첫 줄만 사용하고, 소문자로 바꾸고, 영문/숫자 이외 제거
     let id = rawText
-      .split(/\s+/)[0] // 공백 기준 첫 덩어리만
+      .split(/\s+/)[0]
       .toLowerCase()
-      .replace(/[^a-z0-9]/g, ""); // 영어소문자/숫자만 남기기
+      .replace(/[^a-z0-9]/g, "");
 
-    // 혹시 너무 짧아지면 fallback
     if (id.length < 4) {
       id = `user${Math.floor(1000 + Math.random() * 9000)}`;
     }
@@ -109,7 +113,6 @@ ${infoText}
     return res.status(200).json({ id });
   } catch (err: any) {
     console.error("ID 생성 실패:", err);
-    // quota 부족/기타 에러를 프론트에서 구분해서 보고 싶으면 메시지도 내려줌
     return res
       .status(500)
       .json({ error: "Failed to generate ID", detail: err?.message });
