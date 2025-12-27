@@ -17,20 +17,20 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  // ✅ 키가 없으면 여기서 바로 JSON 에러 반환 (500 HTML 방지)
+  // ✅ 키 없으면 바로 JSON 에러 반환 (500 HTML 방지)
   if (!process.env.OPENAI_API_KEY) {
     return res
       .status(500)
       .json({ error: "서버에 OPENAI_API_KEY가 설정되어 있지 않습니다." });
   }
 
-  // ✅ GET: 상태 체크 + 간단 응답
+  // ✅ GET: 상태 체크용
   if (req.method === "GET") {
     return res.status(200).json({ status: "ok", message: "generate-id alive" });
   }
 
-  // ✅ POST만 실제 ID 생성 로직으로 보냄,
-  //   그 외 메소드는 200 + 안내 문구 (405 아예 안 씀)
+  // ✅ POST만 실제 ID 생성 로직으로 보냄
+  //   그 외 메소드는 200 + 안내 문구 (405는 안 씀)
   if (req.method !== "POST") {
     return res.status(200).json({
       status: "noop",
@@ -101,6 +101,7 @@ ${infoText}
         .json({ error: "아이디를 생성하지 못했어요.(빈 응답)" });
     }
 
+    // 기본 베이스 아이디
     let id = rawText
       .split(/\s+/)[0]
       .toLowerCase()
@@ -111,15 +112,17 @@ ${infoText}
     }
 
     // ✅ 유일성 보장용 suffix 추가 (시간 + 랜덤)
-    //   - 시간: Date.now() → 36진수로 줄이기
-    //   - 랜덤: 0~1295 사이 숫자를 36진수로
-    const timePart = Date.now().toString(36).slice(-4); // 4글자
+    const timePart = Date.now().toString(36).slice(-2); // 2글자
     const randPart = Math.floor(Math.random() * 36 * 36)
       .toString(36)
       .padStart(2, "0"); // 2글자
-    let finalId = `${id}${timePart}${randPart}`;
 
-    return res.status(200).json({ finalId });
+    let finalId = `${id}${timePart}${randPart}`;
+    // 길이 16자로 제한
+    finalId = finalId.slice(0, 16);
+
+    // ✅ 프론트에서 기대하는 키 이름: id
+    return res.status(200).json({ id: finalId });
   } catch (err: any) {
     console.error("ID 생성 실패:", err);
     return res

@@ -138,20 +138,18 @@ export default function QuestionEnd() {
       )}
       {/* 크레딧 텍스트 */}
       {!showIdPage && (
-        <div>
-          <div className="absolute top-[40%] animate-credits text-center">
-            <p className="text-lg leading-relaxed">
-              올해도 수고하셨습니다! 2025년도 오류를 완벽하게 잡진 못 했어요.{" "}
-              <br />
-              😞; <br />
-              <br /> ↓ 지금까지 쓴 것을 꼭 꼭 제출해주세요~~~ ↓
-            </p>
-          </div>
+        <div className="absolute top-[40%] animate-credits text-center">
+          <p className="text-lg leading-relaxed">
+            올해도 수고하셨습니다! 2025년도 오류를 완벽하게 잡진 못 했어요.{" "}
+            <br />
+            😞; <br />
+            <br /> ↓ 지금까지 쓴 것을 꼭 꼭 제출해주세요~~~ ↓
+          </p>
 
           {/* 버튼 */}
           <button
             onClick={handleSubmit}
-            className="bg-customGreen text-white py-2 px-6 rounded-lg hover:bg-customDGreen absolute top-[55%] opacity-0 animate-button"
+            className="bg-customGreen text-white py-2 px-6 rounded-lg hover:bg-customDGreen  opacity-0 animate-button"
             disabled={isUploading}
           >
             {isUploading ? "보내는 중..." : "보내기"}
